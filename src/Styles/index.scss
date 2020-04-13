@@ -1,0 +1,87 @@
+@import "variables";
+
+@font-face {
+  font-family: "IranSans";
+  src: url("../Media/Fonts/IRANSans.woff") format("woff");
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--dark-color);
+  direction: rtl;
+  font-family: "IranSans", serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, input, a, textarea, h4, h3, h2, h1, select {
+  padding: 0;
+  margin: 0;
+  border: none;
+  font-family: "IranSans", serif;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+video::-webkit-media-text-track-display {
+  font-family: "IranSans", serif;
+  font-size: 20px;
+
+  @media screen and (max-width: 480px) {
+    font-size: 13px;
+  }
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+video::cue {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--border-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-color);
+}
+
+::-moz-selection { /* Code for Firefox */
+  color: white;
+  background: var(--primary-color);
+}
+
+::selection {
+  color: white;
+  background: var(--primary-color);
+}
