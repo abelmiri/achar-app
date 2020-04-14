@@ -10,6 +10,7 @@ class WeeksPage extends PureComponent
         super(props)
         this.state = {
             loading: true,
+            bookLoading: false,
             weeks: [],
         }
         this.bookWrapper = [React.createRef()]
@@ -45,9 +46,15 @@ class WeeksPage extends PureComponent
         this.setState({...this.state, weeks: modifiedWeeks})
     }
 
+    bookLoading = (e, url) =>
+    {
+        e.stopPropagation()
+        this.setState({...this.state, bookLoading: true}, () => setTimeout(() => window.location = url, 50))
+    }
+
     render()
     {
-        const {loading, weeks} = this.state
+        const {loading, bookLoading, weeks} = this.state
         if (loading) return (
             <div className="loading-container">
                 <MoonLoader size="70px" color="#303030"/>
@@ -55,6 +62,7 @@ class WeeksPage extends PureComponent
         )
         else return (
             <div className="weeks-wrapper">
+                {bookLoading && <div className="book-loading"><MoonLoader size="70px" color="#66FFCC"/></div>}
                 {
                     weeks.map((w, i) =>
                         <div key={w._id} className="week-element" onClick={() => this.weekClick(i)} style={{"marginBottom": `${w.selected ? this.bookWrapper[i].scrollHeight + 25 : 25}px`}}>
@@ -73,7 +81,7 @@ class WeeksPage extends PureComponent
                                  style={{"height": `${w.selected ? this.bookWrapper[i].scrollHeight : 0}px`}}>
                                 {
                                     w.books.map(b =>
-                                        <a key={b._id} className="book-element" href={`https://docs.google.com/viewerng/viewer?url=https://restful.achar.tv${b.file}`}>
+                                        <div key={b._id} className="book-element" onClick={(e) => this.bookLoading(e, `https://docs.google.com/viewerng/viewer?url=https://restful.achar.tv${b.file}`)}>
                                             <img alt="book" src={"https://restful.achar.tv" + b.picture} className="book-element-picture"/>
                                             <div>
                                                 <div className="book-element-name">{b.name}</div>
@@ -81,7 +89,7 @@ class WeeksPage extends PureComponent
                                                     {b.description ? b.description : "طراحان سایت و اپلیکیشن هنگام طراحی قالب سایت معمولا با این موضوع رو برو هستند."}
                                                 </div>
                                             </div>
-                                        </a>,
+                                        </div>,
                                     )
                                 }
                             </div>
