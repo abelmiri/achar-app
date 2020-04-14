@@ -2,6 +2,7 @@ import React, {PureComponent} from "react"
 import axios from "axios"
 import {MoonLoader} from "react-spinners"
 import ArrowSvg from "../Media/Svgs/arrow_svg"
+import Material from "./Material"
 
 class WeeksPage extends PureComponent
 {
@@ -18,12 +19,13 @@ class WeeksPage extends PureComponent
 
     componentDidMount()
     {
+        setTimeout(() => window.scroll({top: 0}), 50)
         const {token} = this.props.user
         axios.get("https://restful.achar.tv/week/", {headers: token ? {"Authorization": `${token}`} : null})
             .then((res) =>
             {
                 let weeks = res.data.reduce((sum, num) => ([...sum, {...num, selected: false}]), [])
-                this.setState({...this.state, weeks, loading: false}, () => setTimeout(this.selectDefault, 500))
+                this.setState({...this.state, weeks, loading: false}, () => setTimeout(this.selectDefault, 250))
             })
             .catch((err) =>
             {
@@ -66,17 +68,19 @@ class WeeksPage extends PureComponent
                 {
                     weeks.map((w, i) =>
                         <div key={w._id} className="week-element" onClick={() => this.weekClick(i)} style={{"marginBottom": `${w.selected ? this.bookWrapper[i].scrollHeight + 25 : 25}px`}}>
-                            <div>
-                                {w.name}
-                            </div>
-                            <div className="week-element-date">
-                                {new Date(w.start_date).toLocaleDateString("fa-ir")}
-                                &nbsp; تا &nbsp;
-                                {new Date(w.end_date).toLocaleDateString("fa-ir")}
-                            </div>
-                            <div>
-                                <ArrowSvg className={`week-element-arrow-svg ${w.selected && "selected"}`}/>
-                            </div>
+                            <Material className="week-element-material">
+                                <div>
+                                    {w.name}
+                                </div>
+                                <div className="week-element-date">
+                                    {new Date(w.start_date).toLocaleDateString("fa-ir")}
+                                    &nbsp; تا &nbsp;
+                                    {new Date(w.end_date).toLocaleDateString("fa-ir")}
+                                </div>
+                                <div>
+                                    <ArrowSvg className={`week-element-arrow-svg ${w.selected && "selected"}`}/>
+                                </div>
+                            </Material>
                             <div className="books-wrapper" ref={e => this.bookWrapper[i] = e}
                                  style={{"height": `${w.selected ? this.bookWrapper[i].scrollHeight : 0}px`}}>
                                 {
