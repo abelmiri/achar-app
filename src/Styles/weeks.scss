@@ -1,0 +1,53 @@
+@import "variables";
+
+@keyframes main-animation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.loading-container {
+  margin-top: 45vh;
+}
+
+.weeks-wrapper {
+  animation: main-animation 1s ease;
+  width: 100%;
+  padding: 25px 20px;
+}
+
+.week-element {
+  width: calc(100% - 30px);
+  height: 65px;
+  background-color: var(--primary-color);
+  font-size: 20px;
+  margin-bottom: 25px;
+  border-radius: 18px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+.week-element-date {
+  font-size: 12px;
+}
+
+.week-element-arrow-svg {
+  fill: var(--dark-color);
+  width: 14px;
+  height: 14px;
+  transform: rotate(90deg) translateX(4px);
+  background-color: var(--primary-color);
+  padding: 7px;
+  border-radius: 100%;
+  transition: all ease $normal-animation-duration;
+
+  &.selected {
+    background-color: var(--primary-color-selected);
+  }
+}

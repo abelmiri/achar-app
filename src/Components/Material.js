@@ -51,10 +51,7 @@ class Material extends React.PureComponent
                     {
                         target.removeChild(ripple)
                     }
-                    catch (e)
-                    {
-                        console.log("material failed")
-                    }
+                    catch (e) {}
                 }, 600)
             }
         }
@@ -70,10 +67,7 @@ class Material extends React.PureComponent
                         this.container.removeChild(this.ripple)
                         this.ripple = null
                     }
-                    catch (e)
-                    {
-                        console.log("material failed")
-                    }
+                    catch (e) {}
                 }
             }, 500)
         }
@@ -124,10 +118,7 @@ class Material extends React.PureComponent
                         this.container.removeChild(this.ripple)
                         this.ripple = null
                     }
-                    catch (e)
-                    {
-                        console.log("material failed")
-                    }
+                    catch (e) {}
                 }
             }, 500)
         }

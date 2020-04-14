@@ -1,7 +1,9 @@
 import React, {PureComponent} from "react"
+import {Route, Switch} from "react-router-dom"
 import Material from "./Components/Material"
 import Logo from "./Media/Images/logo.png"
 import axios from "axios"
+import WeeksPage from "./Components/WeeksPage"
 
 class App extends PureComponent
 {
@@ -36,15 +38,15 @@ class App extends PureComponent
         }
     }
 
-    logout = () =>
-    {
-        localStorage.removeItem("user")
-        this.setState({...this.state, user: null})
-    }
+    // logout = () =>
+    // {
+    //     localStorage.removeItem("user")
+    //     this.setState({...this.state, user: null})
+    // }
 
     choice = (selected) =>
     {
-        console.log(selected)
+        // console.log(selected)
         this.setState({...this.state, choice: selected})
     }
 
@@ -87,8 +89,8 @@ class App extends PureComponent
                 })
                 .catch((err) =>
                 {
-                    this.setState({...this.state, codeError: true, loading: false})
-                    console.log("ERR", err.response)
+                    this.setState({...this.state, error: true, loading: false})
+                    console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica',consolas,sans-serif; font-weight:900;", err.response)
                 })
         })
     }
@@ -99,14 +101,14 @@ class App extends PureComponent
         phone.length === 11 &&
         name.length > 0 &&
         code.length > 3 &&
-        this.setState({...this.state, loading: true, error: false}, () =>
+        this.setState({...this.state, loading: true, codeError: false}, () =>
         {
-            axios.post("https://restful.achar.tv/user/login-sign-up/?time=" + new Date().toISOString(), {code, phone, name})
+            axios.post("https://restful.achar.tv/user/login-sign-up/", {code, phone, name})
                 .then((res) => this.setState({...this.state, loading: false, user: res.data}, () => localStorage.setItem("user", JSON.stringify(res.data))))
                 .catch((err) =>
                 {
-                    this.setState({...this.state, error: true, loading: false})
-                    console.log("ERR", err.response)
+                    this.setState({...this.state, codeError: true, loading: false})
+                    console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica',consolas,sans-serif; font-weight:900;", err.response)
                 })
         })
     }
@@ -116,14 +118,14 @@ class App extends PureComponent
         const {code, phone} = this.state
         phone.length === 11 &&
         code.length > 3 &&
-        this.setState({...this.state, loading: true, error: false}, () =>
+        this.setState({...this.state, loading: true, codeError: false}, () =>
         {
-            axios.post("https://restful.achar.tv/user/login-sign-up/?time=" + new Date().toISOString(), {code, phone})
+            axios.post("https://restful.achar.tv/user/login-sign-up/", {code, phone})
                 .then((res) => this.setState({...this.state, loading: false, user: res.data}, () => localStorage.setItem("user", JSON.stringify(res.data))))
                 .catch((err) =>
                 {
-                    this.setState({...this.state, error: true, loading: false})
-                    console.log("ERR", err.response)
+                    this.setState({...this.state, codeError: true, loading: false})
+                    console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica',consolas,sans-serif; font-weight:900;", err.response)
                 })
         })
     }
@@ -133,9 +135,10 @@ class App extends PureComponent
     {
         const {user, choice, name, phone, code, loading, error, codeError, nextSignUpStep, nextLoginStep, counter, codeProblem} = this.state
         if (user) return (
-            <div className="home-wrapper">
-                <img src={Logo} className="main-logo" alt="logo"/>
-                <Material className="main-button">واستا تا بریم داخل</Material>
+            <div className="wrapper">
+                <Switch>
+                    <Route path="/" render={() => <WeeksPage user={user}/>}/>
+                </Switch>
             </div>
         )
         else return (

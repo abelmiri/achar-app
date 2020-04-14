@@ -10,6 +10,15 @@
   animation: main-animation 1s ease;
 }
 
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  animation: main-animation 1s ease;
+}
+
 @keyframes main-animation {
   from {
     opacity: 0;
