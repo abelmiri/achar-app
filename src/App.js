@@ -4,6 +4,7 @@ import Material from "./Components/Material"
 import Logo from "./Media/Images/logo.png"
 import axios from "axios"
 import WeeksPage from "./Components/WeeksPage"
+import QuestionsPage from "./Components/QuestionsPage"
 
 class App extends PureComponent
 {
@@ -137,7 +138,8 @@ class App extends PureComponent
         if (user) return (
             <div className="wrapper">
                 <Switch>
-                    <Route path="/" render={() => <WeeksPage user={user}/>}/>
+                    <Route exact path="/" render={() => <WeeksPage user={user}/>}/>
+                    <Route path="/questions/:bookId" render={(route) => <QuestionsPage user={user} bookId={route.match.params.bookId}/>}/>
                 </Switch>
             </div>
         )

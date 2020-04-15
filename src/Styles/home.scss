@@ -59,10 +59,12 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
   margin: 25px 0;
   transition-duration: $normal-animation-duration;
+  color: var(--dark-color);
 
   &.inactive {
     background-color: var(--secondary-color);
     transition-duration: $normal-animation-duration;
+    color: var(--inactive-color);
   }
 }
 

@@ -9,6 +9,15 @@
   }
 }
 
+@keyframes modal-body-animation {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 .loading-container {
   margin-top: 45vh;
 }
@@ -72,7 +81,10 @@
   transition: all ease $long-animation-duration;
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
-  //box-shadow: 0 5px 15px rgba(0, 0, 0, .1); Was kinda heavy
+
+  &.shadow {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+  }
 }
 
 .book-element {
@@ -133,3 +145,24 @@
   align-items: center;
 }
 
+.modal-container {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .5);
+  animation: main-animation $normal-animation-duration ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-body {
+  width: calc(81.5% - 40px);
+  padding: 20px;
+  border-radius: 15px;
+  background-color: var(--background-color);
+  animation: modal-body-animation $normal-animation-duration ease;
+}

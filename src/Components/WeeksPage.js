@@ -3,15 +3,20 @@ import axios from "axios"
 import {MoonLoader} from "react-spinners"
 import ArrowSvg from "../Media/Svgs/arrow_svg"
 import Material from "./Material"
+import {Link} from "react-router-dom"
 
 class WeeksPage extends PureComponent
 {
+    bookURL = ""
+    bookId = ""
+
     constructor(props)
     {
         super(props)
         this.state = {
             loading: true,
             bookLoading: false,
+            bookModal: false,
             weeks: [],
         }
         this.bookWrapper = [React.createRef()]
@@ -49,15 +54,30 @@ class WeeksPage extends PureComponent
         this.setState({...this.state, weeks: modifiedWeeks})
     }
 
-    bookLoading = (e, url) =>
+    showBookModal = (e, url, id) =>
     {
         e.stopPropagation()
-        this.setState({...this.state, bookLoading: true}, () => window.location = url)
+        this.bookURL = url
+        this.bookId = id
+        this.setState({...this.state, bookModal: true})
+    }
+
+    hideBookModal = (e) =>
+    {
+        e.preventDefault()
+        this.setState({...this.state, bookModal: false})
+    }
+
+    bookLoading = (e) =>
+    {
+        e.stopPropagation()
+        this.setState({...this.state, bookLoading: true})
+        setTimeout(() => window.location = this.bookURL, 150)
     }
 
     render()
     {
-        const {loading, bookLoading, weeks} = this.state
+        const {loading, bookLoading, weeks, bookModal} = this.state
         if (loading) return (
             <div className="loading-container">
                 <MoonLoader size="70px" color="#303030"/>
@@ -65,7 +85,26 @@ class WeeksPage extends PureComponent
         )
         else return (
             <div className="weeks-wrapper">
-                {bookLoading && <div className="book-loading"><MoonLoader size="70px" color="#66FFCC"/></div>}
+                {
+                    bookLoading && <div className="book-loading"><MoonLoader size="70px" color="#66FFCC"/></div>
+                }
+
+                {
+                    bookModal &&
+                    <div className="modal-container" onClick={(e) => this.hideBookModal(e)}>
+                        <div className="modal-body" onClick={(e) => e.stopPropagation()}>
+                            <Material className={`main-button`} onClick={(e) => this.bookLoading(e)}>
+                                مشاهده‌ی کتاب
+                            </Material>
+                            <Link to={`/questions/${this.bookId}`}>
+                                <Material className={`main-button`} onClick={() => null}>
+                                    شرکت در آزمون
+                                </Material>
+                            </Link>
+                        </div>
+                    </div>
+                }
+
                 {
                     weeks.map((w, i) =>
                         <div key={w._id} className="week-element" onClick={() => this.weekClick(i)} style={{"marginBottom": `${w.selected ? this.bookWrapper[i].scrollHeight + 25 : 25}px`}}>
@@ -87,7 +126,7 @@ class WeeksPage extends PureComponent
                                 {
                                     w.books.map(b =>
                                         <Material key={b._id} className="book-element" backgroundColor="rgba(102,255,204,.4)"
-                                                  onClick={(e) => this.bookLoading(e, `https://docs.google.com/viewerng/viewer?url=https://restful.achar.tv${b.file}`)}>
+                                                  onClick={(e) => this.showBookModal(e, `https://docs.google.com/viewerng/viewer?url=https://restful.achar.tv${b.file}`, b._id)}>
                                             <img style={{"flexGrow": "1"}} alt="book" src={"https://restful.achar.tv" + b.picture} className="book-element-picture"/>
                                             <div className="book-element-details">
                                                 <div className="book-element-name">
@@ -104,7 +143,8 @@ class WeeksPage extends PureComponent
                                     )
                                 }
                             </div>
-                        </div>)
+                        </div>,
+                    )
                 }
             </div>
         )
