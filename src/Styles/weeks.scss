@@ -82,14 +82,20 @@
   width: calc(100% - 60px);
   background-color: var(--secondary-color-light);
   border-radius: 15px;
+  align-items: center;
 }
 
 .book-element-picture {
-  width: 75px;
+  max-width: 75px;
   height: 90px;
   object-fit: cover;
   border-radius: 15px;
   margin-left: 10px;
+  flex-grow: 1;
+}
+
+.book-element-details {
+  flex-grow: 1;
 }
 
 .book-element-name {

@@ -88,8 +88,8 @@ class WeeksPage extends PureComponent
                                     w.books.map(b =>
                                         <Material key={b._id} className="book-element" backgroundColor="rgba(102,255,204,.4)"
                                                   onClick={(e) => this.bookLoading(e, `https://docs.google.com/viewerng/viewer?url=https://restful.achar.tv${b.file}`)}>
-                                            <img alt="book" src={"https://restful.achar.tv" + b.picture} className="book-element-picture"/>
-                                            <div>
+                                            <img style={{"flexGrow": "1"}} alt="book" src={"https://restful.achar.tv" + b.picture} className="book-element-picture"/>
+                                            <div className="book-element-details">
                                                 <div className="book-element-name">
                                                     {b.name}
                                                     <div className="book-element-date">
