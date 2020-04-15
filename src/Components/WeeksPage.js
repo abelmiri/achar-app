@@ -19,7 +19,7 @@ class WeeksPage extends PureComponent
 
     componentDidMount()
     {
-        setTimeout(() => window.scroll({top: 0}), 50)
+        setTimeout(() => window.scroll({top: 0}), 100)
         const {token} = this.props.user
         axios.get("https://restful.achar.tv/week/", {headers: token ? {"Authorization": `${token}`} : null})
             .then((res) =>
@@ -51,7 +51,7 @@ class WeeksPage extends PureComponent
     bookLoading = (e, url) =>
     {
         e.stopPropagation()
-        this.setState({...this.state, bookLoading: true}, () => setTimeout(() => window.location = url, 50))
+        this.setState({...this.state, bookLoading: true}, () => window.location = url)
     }
 
     render()
@@ -85,15 +85,21 @@ class WeeksPage extends PureComponent
                                  style={{"height": `${w.selected ? this.bookWrapper[i].scrollHeight : 0}px`}}>
                                 {
                                     w.books.map(b =>
-                                        <div key={b._id} className="book-element" onClick={(e) => this.bookLoading(e, `https://docs.google.com/viewerng/viewer?url=https://restful.achar.tv${b.file}`)}>
+                                        <Material key={b._id} className="book-element" backgroundColor="rgba(102,255,204,.4)"
+                                                  onClick={(e) => this.bookLoading(e, `https://docs.google.com/viewerng/viewer?url=https://restful.achar.tv${b.file}`)}>
                                             <img alt="book" src={"https://restful.achar.tv" + b.picture} className="book-element-picture"/>
                                             <div>
-                                                <div className="book-element-name">{b.name}</div>
+                                                <div className="book-element-name">
+                                                    {b.name}
+                                                    <div className="book-element-date">
+                                                        {new Date(b.created_date).toLocaleDateString("fa-ir")}
+                                                    </div>
+                                                </div>
                                                 <div className="book-element-description">
                                                     {b.description ? b.description : "طراحان سایت و اپلیکیشن هنگام طراحی قالب سایت معمولا با این موضوع رو برو هستند."}
                                                 </div>
                                             </div>
-                                        </div>,
+                                        </Material>,
                                     )
                                 }
                             </div>
