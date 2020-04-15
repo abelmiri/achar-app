@@ -131,13 +131,13 @@ class WeeksPage extends PureComponent
                                             <div className="book-element-details">
                                                 <div className="book-element-name">
                                                     {b.name}
-                                                    <div className="book-element-date">
-                                                        {new Date(b.created_date).toLocaleDateString("fa-ir")}
-                                                    </div>
                                                 </div>
                                                 <div className="book-element-description">
-                                                    {b.description ? b.description : "طراحان سایت و اپلیکیشن هنگام طراحی قالب سایت معمولا با این موضوع رو برو هستند."}
+                                                    {b.description ? b.description : "توضیحاتی ارائه نشده!"}
                                                 </div>
+                                            </div>
+                                            <div className="book-element-date">
+                                                {new Date(b.created_date).toLocaleDateString("fa-ir")}
                                             </div>
                                         </Material>,
                                     )

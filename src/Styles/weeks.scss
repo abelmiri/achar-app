@@ -26,6 +26,19 @@
   animation: main-animation 1s ease;
   width: 100%;
   padding: 25px 20px;
+  
+  @media screen and (min-width: 768px) {
+    width: 80%;
+  }
+  @media screen and (min-width: 1024px) {
+    width: 60%;
+  }
+  @media screen and (min-width: 1366px) {
+    width: 50%;
+  }
+  @media screen and (min-width: 1920px) {
+    width: 40%;
+  }
 }
 
 .week-element {
@@ -49,10 +62,23 @@
   justify-content: space-between;
   padding: 0 15px;
   transition: all ease $long-animation-duration;
+  cursor: pointer;
 }
 
 .week-element-date {
   font-size: 12px;
+  @media screen and (min-width: 768px) {
+    font-size: 14px;
+  }
+  @media screen and (min-width: 1024px) {
+    font-size: 16px;
+  }
+  @media screen and (min-width: 1366px) {
+    font-size: 16px;
+  }
+  @media screen and (min-width: 1920px) {
+    font-size: 16px;
+  }
 }
 
 .week-element-arrow-svg {
@@ -95,6 +121,7 @@
   background-color: var(--secondary-color-light);
   border-radius: 15px;
   align-items: center;
+  cursor: pointer;
 }
 
 .book-element-picture {
@@ -120,9 +147,21 @@
 .book-element-date {
   position: absolute;
   font-size: 10px;
-  left: -7px;
-  top: -11px;
+  left: 7px;
+  top: 5px;
   font-weight: normal;
+  @media screen and (min-width: 768px) {
+    font-size: 12px;
+  }
+  @media screen and (min-width: 1024px) {
+    font-size: 14px;
+  }
+  @media screen and (min-width: 1366px) {
+    font-size: 14px;
+  }
+  @media screen and (min-width: 1920px) {
+    font-size: 14px;
+  }
 }
 
 .book-element-description {
@@ -165,4 +204,16 @@
   border-radius: 15px;
   background-color: var(--background-color);
   animation: modal-body-animation $normal-animation-duration ease;
+  @media screen and (min-width: 768px) {
+    width: calc(60% - 40px);
+  }
+  @media screen and (min-width: 1024px) {
+    width: calc(50% - 40px);
+  }
+  @media screen and (min-width: 1366px) {
+    width: calc(40% - 40px);
+  }
+  @media screen and (min-width: 1920px) {
+    width: calc(35% - 40px);
+  }
 }

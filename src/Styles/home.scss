@@ -60,6 +60,7 @@
   margin: 25px 0;
   transition-duration: $normal-animation-duration;
   color: var(--dark-color);
+  cursor: pointer;
 
   &.inactive {
     background-color: var(--secondary-color);
