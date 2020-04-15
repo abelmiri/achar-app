@@ -37,7 +37,8 @@ class WeeksPage extends PureComponent
     selectDefault = () =>
     {
         let {weeks} = this.state
-        let modifiedWeeks = weeks.map((w, i) => i === 0 ? {...w, selected: true} : w)
+        let modifiedWeeks = [...weeks]
+        modifiedWeeks[0].selected = true
         this.setState({...this.state, weeks: modifiedWeeks})
     }
 
