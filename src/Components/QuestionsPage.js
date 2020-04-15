@@ -66,15 +66,10 @@ class QuestionsPage extends PureComponent
                     axios.post(`https://restful.achar.tv/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
                         .then((res) =>
                         {
-                            this.setState({...this.state, questionAnswer: res.data})
-
                             axios.post(`https://restful.achar.tv/lottery/`, {book_id: data.book._id}, {headers: token ? {"Authorization": `${token}`} : null})
-                                .then((res) =>
-                                {
-                                    res.statusCode === 200 && this.setState({...this.state, allCorrect: true})
-                                })
-                                .catch(() => null)
-
+                                .then(() => this.setState({...this.state, questionAnswer: res.data, allCorrect: true}, () => console.log("HALE")),
+                                )
+                                .catch(() => this.setState({...this.state, questionAnswer: res.data, allCorrect: false}, () => console.log("HAL NIST")))
                             setTimeout(() => this.setState({...this.state, redirect: true, questionAnswer: null, qLoading: false, userAnswer: 0}), 5000)
                         })
                         .catch((err) =>
@@ -128,6 +123,7 @@ class QuestionsPage extends PureComponent
     render()
     {
         const {loading, data, selected, level, userAnswer, questionAnswer, redirect, qLoading, allCorrect} = this.state
+        console.log(allCorrect)
         if (loading) return (
             <div className="loading-container">
                 <MoonLoader size="70px" color="#303030"/>
