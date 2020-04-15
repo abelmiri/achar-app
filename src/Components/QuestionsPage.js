@@ -18,6 +18,7 @@ class QuestionsPage extends PureComponent
             userAnswer: 0,
             redirect: false,
             allCorrect: false,
+            late: false,
             questionAnswer: null,
         }
     }
@@ -67,7 +68,9 @@ class QuestionsPage extends PureComponent
                         .then((res) =>
                         {
                             axios.post(`https://restful.achar.tv/lottery/`, {book_id: data.book._id}, {headers: token ? {"Authorization": `${token}`} : null})
-                                .then(() => this.setState({...this.state, questionAnswer: res.data, allCorrect: true}, () => console.log("HALE")),
+                                .then((res) => res.statusCode === 200
+                                    ? this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: false}) :
+                                    this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: true}),
                                 )
                                 .catch(() => this.setState({...this.state, questionAnswer: res.data, allCorrect: false}, () => console.log("HAL NIST")))
                             setTimeout(() => this.setState({...this.state, redirect: true, questionAnswer: null, qLoading: false, userAnswer: 0}), 5000)
@@ -122,7 +125,7 @@ class QuestionsPage extends PureComponent
 
     render()
     {
-        const {loading, data, selected, level, userAnswer, questionAnswer, redirect, qLoading, allCorrect} = this.state
+        const {loading, data, selected, level, userAnswer, questionAnswer, redirect, qLoading, allCorrect, late} = this.state
         console.log(allCorrect)
         if (loading) return (
             <div className="loading-container">
@@ -188,7 +191,11 @@ class QuestionsPage extends PureComponent
                     <React.Fragment>
                         <hr/>
                         <div className="correct-answer">
-                            تبریک! تمام پاسخ های شما صحیح بود و در قرعه‌کشی شرکت خواهید کرد
+                            {
+                                late ?
+                                    "تبریک! تمام پاسخ های شما صحیح بود" :
+                                    "تبریک! تمام پاسخ های شما صحیح بود و در قرعه‌کشی شرکت خواهید کرد"
+                            }
                         </div>
                     </React.Fragment>
                 }
