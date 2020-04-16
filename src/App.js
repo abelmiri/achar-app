@@ -142,7 +142,7 @@ class App extends PureComponent
         code.length > 3 &&
         this.setState({...this.state, loading: true, codeError: false}, () =>
         {
-            axios.post("https://restful.achar.tv/user/login-sign-up/", {code, phone, name})
+            axios.post("https://restful.achar.tv/user/login-sign-up/", {code, phone, name: name.trim()})
                 .then((res) => this.setState({...this.state, loading: false, user: res.data}, () => localStorage.setItem("user", JSON.stringify(res.data))))
                 .catch((err) =>
                 {
@@ -213,7 +213,7 @@ class App extends PureComponent
                                 choice === "sign-up" &&
                                 <React.Fragment>
                                     <input className="main-input" value={name} placeholder="نام" maxLength="32" type="name"
-                                           onChange={(event) => this.setName(event.target.value.trim().toLowerCase())}/>
+                                           onChange={(event) => this.setName(event.target.value.toLowerCase())}/>
                                     <input className="main-input" value={phone} placeholder="شماره" type="number" onChange={(event) => this.setPhone(event.target.value.trim())}/>
                                     {
                                         nextSignUpStep ?
