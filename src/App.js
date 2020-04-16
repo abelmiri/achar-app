@@ -173,6 +173,7 @@ class App extends PureComponent
     render()
     {
         const {user, choice, name, phone, code, loading, error, codeError, nextSignUpStep, nextLoginStep, counter, codeProblem} = this.state
+        const {location} = this.props
         return (
             <React.Fragment>
                 <Header user={user} logout={this.logout}/>
@@ -180,7 +181,7 @@ class App extends PureComponent
                     user ?
                         <div className="wrapper">
                             <Switch>
-                                <Route exact path="/" render={() => <WeeksPage user={user}/>}/>
+                                <Route exact path="/" render={() => <WeeksPage location={location} user={user}/>}/>
                                 <Route path="/questions/:bookId" render={(route) => <QuestionsPage user={user} bookId={route.match.params.bookId}/>}/>
                                 <Route path="/*" render={() => <Redirect to={"/"}/>}/>
                             </Switch>

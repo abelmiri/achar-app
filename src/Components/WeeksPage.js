@@ -44,12 +44,26 @@ class WeeksPage extends PureComponent
                 this.setState({...this.state, loading: false})
             })
 
+        window.addEventListener("popstate", this.onPopState)
         document.addEventListener("scroll", this.onScroll)
     }
 
     componentWillUnmount()
     {
+        window.removeEventListener("popstate", this.onPopState)
         document.removeEventListener("scroll", this.onScroll)
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot)
+    {
+        const {iframeLoaded} = this.state
+        if (prevProps.location !== this.props.location && iframeLoaded) this.setState({...this.state, bookModal: false, bookLoading: false, iframeLoaded: false})
+    }
+
+    onPopState = () =>
+    {
+        const {bookLoading, iframeLoaded} = this.state
+        if (bookLoading || iframeLoaded) this.setState({...this.state, bookModal: false, bookLoading: false, iframeLoaded: false})
     }
 
     onScroll = () =>
@@ -98,9 +112,11 @@ class WeeksPage extends PureComponent
     showBookModal = (e, url, id) =>
     {
         e.stopPropagation()
-        this.bookURL = url
-        this.bookId = id
-        this.setState({...this.state, bookModal: true})
+        this.setState({...this.state, bookModal: true}, () =>
+        {
+            this.bookURL = url
+            this.bookId = id
+        })
     }
 
     hideBookModal = (e) =>
@@ -112,13 +128,14 @@ class WeeksPage extends PureComponent
     bookLoading = (e) =>
     {
         e.stopPropagation()
-        this.setState({...this.state, bookLoading: true})
-        // setTimeout(() => window.location = this.bookURL, 150)
+        this.setState({...this.state, bookLoading: true}, () =>
+            window.history.pushState("", "", "/show-book"),
+        )
     }
 
     iframeLoad = () =>
     {
-        this.setState({...this.state, iframeLoaded: true, bookLoading: false})
+        this.setState({...this.state, iframeLoaded: true, bookLoading: false, bookModal: false})
     }
 
     render()
@@ -133,14 +150,11 @@ class WeeksPage extends PureComponent
             <div className="weeks-wrapper">
                 {
                     (iframeLoaded || bookLoading) &&
-                    <div className={iframeLoaded ? "iframe-container" : "iframe-unloaded"}>
-                        <iframe title="book" className="book-iframe" style={{"flexGrow": "1"}} onLoad={() => this.iframeLoad()} src={`${this.bookURL}&embedded=true`}/>
+                    <div key={this.bookURL} className={iframeLoaded ? "iframe-container" : "iframe-unloaded"}>
+                        <iframe title="book" className="book-iframe" onLoad={() => this.iframeLoad()} src={`${this.bookURL}&embedded=true`}/>
                     </div>
                 }
-                {
-                    bookLoading && <div className="book-loading"><MoonLoader size="70px" color="#66FFCC"/></div>
-                }
-
+                {bookLoading && <div className="book-loading"><MoonLoader size="70px" color="#66FFCC"/></div>}
                 {
                     bookModal &&
                     <div className="modal-container" onClick={(e) => this.hideBookModal(e)}>
