@@ -68,11 +68,11 @@ class QuestionsPage extends PureComponent
                         .then((res) =>
                         {
                             axios.post(`https://restful.achar.tv/lottery/`, {book_id: data.book._id}, {headers: token ? {"Authorization": `${token}`} : null})
-                                .then((res) => res.statusCode === 200
+                                .then((ans) => ans.statusCode === 200
                                     ? this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: false}) :
                                     this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: true}),
                                 )
-                                .catch(() => this.setState({...this.state, questionAnswer: res.data, allCorrect: false}, () => console.log("HAL NIST")))
+                                .catch(() => this.setState({...this.state, questionAnswer: res.data, allCorrect: false}))
                             setTimeout(() => this.setState({...this.state, redirect: true, questionAnswer: null, qLoading: false, userAnswer: 0}), 5000)
                         })
                         .catch((err) =>
