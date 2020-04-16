@@ -1,8 +1,10 @@
 @import "variables";
 @import "home";
 @import "Material.css";
-@import "weeks.scss";
-@import "questions.scss";
+@import "weeks";
+@import "questions";
+@import "header";
+@import "hamburger";
 
 @font-face {
   font-family: "IranSans";

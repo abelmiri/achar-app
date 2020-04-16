@@ -1,0 +1,40 @@
+@import "variables";
+
+.line-one {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.line-two {
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+.line-three {
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.hamburger-line {
+  position: absolute;
+  height: 3px;
+  background-color: var(--secondary-color);
+  border-radius: 3px;
+  transition: all linear 0.2s;
+}
+
+.hamburger-line-out {
+  opacity: 0;
+}
+
+.hamburger-one-rotate {
+  transform: translateY(11px) rotate(-45deg);
+}
+
+.hamburger-three-rotate {
+  transform: translateY(-11px) rotate(45deg);
+}

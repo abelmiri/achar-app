@@ -5,6 +5,7 @@ import Logo from "./Media/Images/logo.png"
 import axios from "axios"
 import WeeksPage from "./Components/WeeksPage"
 import QuestionsPage from "./Components/QuestionsPage"
+import Header from "./Components/Header"
 
 class App extends PureComponent
 {
@@ -39,11 +40,11 @@ class App extends PureComponent
         }
     }
 
-    // logout = () =>
-    // {
-    //     localStorage.removeItem("user")
-    //     this.setState({...this.state, user: null})
-    // }
+    logout = () =>
+    {
+        localStorage.removeItem("user")
+        this.setState({...this.state, user: null})
+    }
 
     choice = (selected) =>
     {
@@ -135,85 +136,90 @@ class App extends PureComponent
     render()
     {
         const {user, choice, name, phone, code, loading, error, codeError, nextSignUpStep, nextLoginStep, counter, codeProblem} = this.state
-        if (user) return (
-            <div className="wrapper">
-                <Switch>
-                    <Route exact path="/" render={() => <WeeksPage user={user}/>}/>
-                    <Route path="/questions/:bookId" render={(route) => <QuestionsPage user={user} bookId={route.match.params.bookId}/>}/>
-                </Switch>
-            </div>
-        )
-        else return (
-            <div className="home-wrapper">
-                <img src={Logo} className={`main-logo ${nextSignUpStep || nextLoginStep ? "sign-up-second-step" : choice}`} alt="logo"/>
+        return (
+            <React.Fragment>
+                <Header user={user} logout={this.logout}/>
                 {
-                    choice === "login" &&
-                    <React.Fragment>
-                        <input className="main-input" value={phone} placeholder="شماره" type="number" onChange={(event) => this.setPhone(event.target.value.trim())}/>
-                        {
-                            nextLoginStep ?
+                    user ?
+                        <div className="wrapper">
+                            <Switch>
+                                <Route exact path="/" render={() => <WeeksPage user={user}/>}/>
+                                <Route path="/questions/:bookId" render={(route) => <QuestionsPage user={user} bookId={route.match.params.bookId}/>}/>
+                            </Switch>
+                        </div>
+                        :
+                        <div className="home-wrapper">
+                            <img src={Logo} className={`main-logo ${nextSignUpStep || nextLoginStep ? "sign-up-second-step" : choice}`} alt="logo"/>
+                            {
+                                choice === "login" &&
                                 <React.Fragment>
-                                    <div className="counter-text">
-                                        {counter}
-                                    </div>
-                                    <div onClick={() => codeProblem && this.sendCode()} className={codeProblem ? "send-code-text" : "disable-send-code-text"}>
-                                        ارسال مجدد کد
-                                    </div>
-                                    <input className="main-input" value={code} placeholder="کد تأیید" type="number" onChange={(event) => this.setCode(event.target.value.trim())}/>
+                                    <input className="main-input" value={phone} placeholder="شماره" type="number" onChange={(event) => this.setPhone(event.target.value.trim())}/>
+                                    {
+                                        nextLoginStep ?
+                                            <React.Fragment>
+                                                <div className="counter-text">
+                                                    {counter}
+                                                </div>
+                                                <div onClick={() => codeProblem && this.sendCode()} className={codeProblem ? "send-code-text" : "disable-send-code-text"}>
+                                                    ارسال مجدد کد
+                                                </div>
+                                                <input className="main-input" value={code} placeholder="کد تأیید" type="number" onChange={(event) => this.setCode(event.target.value.trim())}/>
+                                            </React.Fragment>
+                                            :
+                                            <div className="input-padding"/>
+                                    }
                                 </React.Fragment>
-                                :
-                                <div className="input-padding"/>
-                        }
-                    </React.Fragment>
-                }
-                {
-                    choice === "sign-up" &&
-                    <React.Fragment>
-                        <input className="main-input" value={name} placeholder="نام" maxLength="32" type="name" onChange={(event) => this.setName(event.target.value.trim().toLowerCase())}/>
-                        <input className="main-input" value={phone} placeholder="شماره" type="number" onChange={(event) => this.setPhone(event.target.value.trim())}/>
-                        {
-                            nextSignUpStep ?
+                            }
+                            {
+                                choice === "sign-up" &&
                                 <React.Fragment>
-                                    <div className="counter-text">
-                                        {counter}
-                                    </div>
-                                    <div onClick={() => codeProblem && this.sendCode()} className={codeProblem ? "send-code-text" : "disable-send-code-text"}>
-                                        ارسال مجدد کد
-                                    </div>
-                                    <input className="main-input" value={code} placeholder="کد تأیید" type="number" onChange={(event) => this.setCode(event.target.value.trim())}/>
+                                    <input className="main-input" value={name} placeholder="نام" maxLength="32" type="name" onChange={(event) => this.setName(event.target.value.trim().toLowerCase())}/>
+                                    <input className="main-input" value={phone} placeholder="شماره" type="number" onChange={(event) => this.setPhone(event.target.value.trim())}/>
+                                    {
+                                        nextSignUpStep ?
+                                            <React.Fragment>
+                                                <div className="counter-text">
+                                                    {counter}
+                                                </div>
+                                                <div onClick={() => codeProblem && this.sendCode()} className={codeProblem ? "send-code-text" : "disable-send-code-text"}>
+                                                    ارسال مجدد کد
+                                                </div>
+                                                <input className="main-input" value={code} placeholder="کد تأیید" type="number" onChange={(event) => this.setCode(event.target.value.trim())}/>
+                                            </React.Fragment>
+                                            :
+                                            <div className="input-padding"/>
+                                    }
                                 </React.Fragment>
-                                :
-                                <div className="input-padding"/>
-                        }
-                    </React.Fragment>
+                            }
+                            {
+                                choice !== "login" &&
+                                <Material
+                                    className={`main-button ${((choice === "sign-up" && phone.length !== 11) || loading || (choice === "sign-up" && nextSignUpStep === true && code.length < 4)) && "inactive"}`}
+                                    onClick={() =>
+                                        choice === "" ? this.choice("sign-up")
+                                            : !loading && code.length >= 4 && phone.length === 11 && name.length !== 0 ? this.signUp()
+                                            : !loading && code.length === 0 && phone.length === 11 ? this.sendCode() : null
+                                    }>
+                                    {choice === "sign-up" && !nextSignUpStep ? "ارسال کد" : "ثبت نام"}
+                                </Material>
+                            }
+                            {
+                                choice !== "sign-up" &&
+                                <Material
+                                    className={`main-button ${((choice === "login" && phone.length !== 11) || loading || (choice === "login" && nextLoginStep === true && code.length < 4)) && "inactive"}`}
+                                    onClick={() =>
+                                        choice === "" ? this.choice("login")
+                                            : !loading && code.length >= 4 && phone.length === 11 ? this.login()
+                                            : !loading && code.length === 0 && phone.length === 11 ? this.sendCode() : null
+                                    }>
+                                    {choice === "login" && !nextLoginStep ? "ارسال کد" : "ورود"}
+                                </Material>
+                            }
+                            {error && <div className="error-text">در دریافت اطلاعات خطایی رخ داده!</div>}
+                            {codeError && <div className="error-text">کد وارد شده غلط است!</div>}
+                        </div>
                 }
-                {
-                    choice !== "login" &&
-                    <Material
-                        className={`main-button ${((choice === "sign-up" && phone.length !== 11) || loading || (choice === "sign-up" && nextSignUpStep === true && code.length < 4)) && "inactive"}`}
-                        onClick={() =>
-                            choice === "" ? this.choice("sign-up")
-                                : !loading && code.length >= 4 && phone.length === 11 && name.length !== 0 ? this.signUp()
-                                : !loading && code.length === 0 && phone.length === 11 ? this.sendCode() : null
-                        }>
-                        {choice === "sign-up" && !nextSignUpStep ? "ارسال کد" : "ثبت نام"}
-                    </Material>
-                }
-                {
-                    choice !== "sign-up" &&
-                    <Material
-                        className={`main-button ${((choice === "login" && phone.length !== 11) || loading || (choice === "login" && nextLoginStep === true && code.length < 4)) && "inactive"}`}
-                        onClick={() =>
-                            choice === "" ? this.choice("login")
-                                : !loading && code.length >= 4 && phone.length === 11 ? this.login()
-                                : !loading && code.length === 0 && phone.length === 11 ? this.sendCode() : null
-                        }>
-                        {choice === "login" && !nextLoginStep ? "ارسال کد" : "ورود"}
-                    </Material>
-                }
-                {error && <div className="error-text">در دریافت اطلاعات خطایی رخ داده!</div>}
-                {codeError && <div className="error-text">کد وارد شده غلط است!</div>}
-            </div>
+            </React.Fragment>
         )
     }
 }
