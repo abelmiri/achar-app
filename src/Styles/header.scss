@@ -34,6 +34,15 @@
   display: block;
 }
 
+.header-icon {
+  width: 65px;
+  //-webkit-filter: sepia(100%) hue-rotate(90deg) saturate(400%);
+  //filter: sepia(100%) hue-rotate(125deg) saturate(2500%);
+  @media screen and (min-width: 480px) {
+    display: none;
+  }
+}
+
 .header-name {
   font-size: 12px;
   margin-right: 20px;
@@ -153,7 +162,7 @@
 
 .header-logo-side {
   width: 35%;
-  margin: 20px 32.5%;
+  margin: 30px 32.5% 10px 32.5%;
   display: block;
 }
 

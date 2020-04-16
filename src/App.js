@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react"
-import {Route, Switch} from "react-router-dom"
+import {Route, Switch, Redirect} from "react-router-dom"
 import Material from "./Components/Material"
 import Logo from "./Media/Images/logo.png"
 import axios from "axios"
@@ -38,6 +38,43 @@ class App extends PureComponent
             user = JSON.parse(localStorage.getItem("user"))
             this.setState({...this.state, user})
         }
+
+        window.addEventListener("popstate", this.onPopState)
+        window.addEventListener("keypress", this.keyPress)
+    }
+
+    componentWillUnmount()
+    {
+        window.removeEventListener("popstate", this.onPopState)
+        window.removeEventListener("keypress", this.keyPress)
+    }
+
+    onPopState = () =>
+    {
+        const {location} = this.props
+        if (location.pathname === "/" && this.state.choice !== "")
+        {
+            this.setState({...this.state, choice: ""})
+        }
+    }
+
+    keyPress = (e) =>
+    {
+        if (e.keyCode === 13)
+        {
+            const {name, phone, code, loading, choice} = this.state
+
+            if (choice === "login")
+            {
+                !loading && code.length >= 4 && phone.length === 11 && this.login()
+                !loading && code.length === 0 && phone.length === 11 && this.sendCode()
+            }
+            if (choice === "sign-up")
+            {
+                !loading && code.length >= 4 && phone.length === 11 && name.length !== 0 && this.signUp()
+                !loading && code.length === 0 && phone.length === 11 && this.sendCode()
+            }
+        }
     }
 
     logout = () =>
@@ -48,8 +85,8 @@ class App extends PureComponent
 
     choice = (selected) =>
     {
-        // console.log(selected)
         this.setState({...this.state, choice: selected})
+        window.history.pushState("", "", `/${selected}`)
     }
 
     setName = (name) =>
@@ -145,6 +182,7 @@ class App extends PureComponent
                             <Switch>
                                 <Route exact path="/" render={() => <WeeksPage user={user}/>}/>
                                 <Route path="/questions/:bookId" render={(route) => <QuestionsPage user={user} bookId={route.match.params.bookId}/>}/>
+                                <Route path="/*" render={() => <Redirect to={"/"}/>}/>
                             </Switch>
                         </div>
                         :
@@ -173,7 +211,8 @@ class App extends PureComponent
                             {
                                 choice === "sign-up" &&
                                 <React.Fragment>
-                                    <input className="main-input" value={name} placeholder="نام" maxLength="32" type="name" onChange={(event) => this.setName(event.target.value.trim().toLowerCase())}/>
+                                    <input className="main-input" value={name} placeholder="نام" maxLength="32" type="name"
+                                           onChange={(event) => this.setName(event.target.value.trim().toLowerCase())}/>
                                     <input className="main-input" value={phone} placeholder="شماره" type="number" onChange={(event) => this.setPhone(event.target.value.trim())}/>
                                     {
                                         nextSignUpStep ?

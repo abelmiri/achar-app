@@ -16,16 +16,22 @@ class WeeksPage extends PureComponent
         this.state = {
             loading: true,
             bookLoading: false,
+            iframeLoaded: false,
+            weeksLoading: false,
             bookModal: false,
             weeks: [],
         }
         this.bookWrapper = [React.createRef()]
+        this.page = 2
+        this.activeScrollHeight = 0
     }
 
     componentDidMount()
     {
         setTimeout(() => window.scroll({top: 0}), 100)
+
         const {token} = this.props.user
+
         axios.get("https://restful.achar.tv/week/", {headers: token ? {"Authorization": `${token}`} : null})
             .then((res) =>
             {
@@ -37,6 +43,41 @@ class WeeksPage extends PureComponent
                 console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err.response)
                 this.setState({...this.state, loading: false})
             })
+
+        document.addEventListener("scroll", this.onScroll)
+    }
+
+    componentWillUnmount()
+    {
+        document.removeEventListener("scroll", this.onScroll)
+    }
+
+    onScroll = () =>
+    {
+        clearTimeout(this.timeout)
+        this.timeout = setTimeout(() =>
+        {
+            const {weeks} = this.state
+            const {token} = this.props.user
+            const scrollHeight = document.body ? document.body.scrollHeight : 0
+            if (weeks.length > 9 && window.innerHeight + window.scrollY >= scrollHeight - 200 && scrollHeight > this.activeScrollHeight)
+            {
+                this.setState({...this.state, weeksLoading: true}, () =>
+                {
+                    this.activeScrollHeight = scrollHeight
+                    axios.get(`https://restful.achar.tv/week/?limit=10&page=${this.page}`, {headers: token ? {"Authorization": `${token}`} : null})
+                        .then((res) =>
+                        {
+                            if (res.data.length > 0)
+                            {
+                                this.page += 1
+                                let addedWeeks = weeks.concat(res.data)
+                                this.setState({...this.state, weeksLoading: false, weeks: addedWeeks})
+                            }
+                        })
+                })
+            }
+        }, 50)
     }
 
     selectDefault = () =>
@@ -65,19 +106,24 @@ class WeeksPage extends PureComponent
     hideBookModal = (e) =>
     {
         e.preventDefault()
-        this.setState({...this.state, bookModal: false})
+        this.setState({...this.state, bookModal: false, bookLoading: false, iframeLoaded: false})
     }
 
     bookLoading = (e) =>
     {
         e.stopPropagation()
         this.setState({...this.state, bookLoading: true})
-        setTimeout(() => window.location = this.bookURL, 150)
+        // setTimeout(() => window.location = this.bookURL, 150)
+    }
+
+    iframeLoad = () =>
+    {
+        this.setState({...this.state, iframeLoaded: true, bookLoading: false})
     }
 
     render()
     {
-        const {loading, bookLoading, weeks, bookModal} = this.state
+        const {loading, bookLoading, iframeLoaded, weeks, bookModal, weeksLoading} = this.state
         if (loading) return (
             <div className="loading-container">
                 <MoonLoader size="70px" color="#303030"/>
@@ -85,6 +131,12 @@ class WeeksPage extends PureComponent
         )
         else return (
             <div className="weeks-wrapper">
+                {
+                    (iframeLoaded || bookLoading) &&
+                    <div className={iframeLoaded ? "iframe-container" : "iframe-unloaded"}>
+                        <iframe title="book" className="book-iframe" style={{"flexGrow": "1"}} onLoad={() => this.iframeLoad()} src={`${this.bookURL}&embedded=true`}/>
+                    </div>
+                }
                 {
                     bookLoading && <div className="book-loading"><MoonLoader size="70px" color="#66FFCC"/></div>
                 }
@@ -146,6 +198,7 @@ class WeeksPage extends PureComponent
                         </div>,
                     )
                 }
+                {weeksLoading && <div><MoonLoader size="30px" color="#66FFCC"/></div>}
             </div>
         )
     }
