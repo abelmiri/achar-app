@@ -3,10 +3,10 @@ import ReactDOM from "react-dom"
 import "./Styles/index.scss"
 import App from "./App"
 import {BrowserRouter, withRouter} from "react-router-dom"
-import * as serviceWorker from "./serviceWorker"
+import serviceWorker from "./serviceWorker"
 
 const WrappedApp = withRouter(App)
 
 ReactDOM.render(<BrowserRouter><WrappedApp/></BrowserRouter>, document.getElementById("root"))
 
-serviceWorker.unregister()
+serviceWorker()

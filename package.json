@@ -16,7 +16,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && del build\\static\\js\\*.map && del build\\static\\css\\*.map && gzip -r build\\static\\js && gzip -r build\\static\\css && sed -i '$d' build\\service-worker.js && sed -i '$d' build\\service-worker.js && sed -i '$d' build\\service-worker.js && sed -i '$d' build\\service-worker.js && cat add.js >> build\\service-worker.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "tv.achar",
+    "sha256_cert_fingerprints":
+    ["E0:1B:C9:81:89:FB:30:3D:6C:53:AB:7E:BF:C0:F0:50:04:28:34:F4:EF:4C:12:60:E2:A2:46:C3:B3:85:74:24"]
+  }
+}]
