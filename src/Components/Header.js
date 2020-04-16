@@ -161,7 +161,7 @@ class Header extends PureComponent
                         {/*mobile*/}
                     </div>
                 }
-                <Link to="/" className="header-section">
+                <Link to="/" className={`header-section ${user ? "" : "none"}`}>
                     <img src={Icon} className="header-icon" alt="دانلود اپ"/>
                 </Link>
                 <div className="header-section">

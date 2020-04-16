@@ -36,8 +36,6 @@
 
 .header-icon {
   width: 65px;
-  //-webkit-filter: sepia(100%) hue-rotate(90deg) saturate(400%);
-  //filter: sepia(100%) hue-rotate(125deg) saturate(2500%);
   @media screen and (min-width: 480px) {
     display: none;
   }
@@ -75,6 +73,10 @@
   height: 80px;
   display: inline-flex;
   align-items: center;
+
+  &.none {
+    display: none;
+  }
 }
 
 .header-link {
