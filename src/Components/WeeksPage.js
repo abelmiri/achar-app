@@ -7,9 +7,6 @@ import {Link} from "react-router-dom"
 
 class WeeksPage extends PureComponent
 {
-    bookURL = ""
-    bookId = ""
-
     constructor(props)
     {
         super(props)
@@ -20,6 +17,8 @@ class WeeksPage extends PureComponent
             weeksLoading: false,
             bookModal: false,
             weeks: [],
+            bookURL: "",
+            bookId: "",
         }
         this.bookWrapper = [React.createRef()]
         this.page = 2
@@ -112,11 +111,7 @@ class WeeksPage extends PureComponent
     showBookModal = (e, url, id) =>
     {
         e.stopPropagation()
-        this.setState({...this.state, bookModal: true}, () =>
-        {
-            this.bookURL = url
-            this.bookId = id
-        })
+        this.setState({...this.state, bookModal: true, bookURL: url, bookId: id})
     }
 
     hideBookModal = (e) =>
@@ -140,7 +135,7 @@ class WeeksPage extends PureComponent
 
     render()
     {
-        const {loading, bookLoading, iframeLoaded, weeks, bookModal, weeksLoading} = this.state
+        const {loading, bookLoading, iframeLoaded, weeks, bookModal, weeksLoading, bookURL, bookId} = this.state
         if (loading) return (
             <div className="loading-container">
                 <MoonLoader size="70px" color="#303030"/>
@@ -150,8 +145,8 @@ class WeeksPage extends PureComponent
             <div className="weeks-wrapper">
                 {
                     (iframeLoaded || bookLoading) &&
-                    <div key={this.bookURL} className={iframeLoaded ? "iframe-container" : "iframe-unloaded"}>
-                        <iframe title="book" className="book-iframe" onLoad={() => this.iframeLoad()} src={`${this.bookURL}&embedded=true`}/>
+                    <div key={bookURL} className={iframeLoaded ? "iframe-container" : "iframe-unloaded"}>
+                        <iframe title="book" className="book-iframe" onLoad={() => this.iframeLoad()} src={`${bookURL}&embedded=true`}/>
                     </div>
                 }
                 {bookLoading && <div className="book-loading"><MoonLoader size="70px" color="#66FFCC"/></div>}
@@ -162,7 +157,7 @@ class WeeksPage extends PureComponent
                             <Material className={`main-button`} onClick={(e) => this.bookLoading(e)}>
                                 مشاهده‌ی کتاب
                             </Material>
-                            <Link to={`/questions/${this.bookId}`}>
+                            <Link to={`/questions/${bookId}`}>
                                 <Material className={`main-button`} onClick={() => null}>
                                     شرکت در آزمون
                                 </Material>
@@ -170,7 +165,6 @@ class WeeksPage extends PureComponent
                         </div>
                     </div>
                 }
-
                 {
                     weeks.map((w, i) =>
                         <div key={w._id} className="week-element" onClick={() => this.weekClick(i)} style={{"marginBottom": `${w.selected ? this.bookWrapper[i].scrollHeight + 25 : 25}px`}}>
