@@ -54,8 +54,9 @@
 .week-element-material {
   width: calc(100% - 30px);
   height: 65px;
+  color: var(--dark-color);
   background-color: var(--primary-color);
-  font-size: 20px;
+  font-size: 16px;
   border-radius: 18px;
   display: flex;
   align-items: center;
@@ -92,7 +93,7 @@
   transition: all ease $normal-animation-duration;
 
   &.selected {
-    background-color: var(--primary-color-selected);
+    background-color: var(--primary-color);
   }
 }
 
@@ -110,6 +111,7 @@
 
   &.shadow {
     box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
+    background-color: var(--secondary-color-light);
   }
 }
 
@@ -166,8 +168,7 @@
 
 .book-element-description {
   font-size: 12px;
-  color: white;
-  text-shadow: 0 0 4px rgba(0, 0, 0, .4);
+  color: var(--primary-color);
 }
 
 .book-loading {

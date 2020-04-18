@@ -29,13 +29,13 @@
 }
 
 .header-logo {
-  width: 70px;
+  width: 55px;
   object-fit: contain;
   display: block;
 }
 
 .header-icon {
-  width: 65px;
+  width: 50px;
   @media screen and (min-width: 480px) {
     display: none;
   }
@@ -83,6 +83,7 @@
   font-size: 13px;
   font-weight: bold;
   margin-left: 20px;
+  color: var(--secondary-color-light);
 
   &.show-mobile {
     @media screen and (max-width: 480px) {
@@ -96,6 +97,7 @@
 }
 
 .header-app {
+  display: block;
   width: 50px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
   border-radius: 50%;
@@ -135,7 +137,7 @@
     bottom: 0;
     right: 0;
     width: 80%;
-    background-color: white;
+    background-color: #1b1b1b;
     z-index: 4;
   }
 }
@@ -146,6 +148,7 @@
   padding: 20px 15px;
   margin-top: -1px;
   background-color: inherit;
+  color: var(--secondary-color-light);
 
   &.name {
     text-align: center;

@@ -31,7 +31,7 @@ class WeeksPage extends PureComponent
 
         const {token} = this.props.user
 
-        axios.get("https://restful.achar.tv/week/", {headers: token ? {"Authorization": `${token}`} : null})
+        axios.get("https://restful.ketabekhoob.ir/week/", {headers: token ? {"Authorization": `${token}`} : null})
             .then((res) =>
             {
                 let weeks = res.data.reduce((sum, num) => ([...sum, {...num, selected: false}]), [])
@@ -78,7 +78,7 @@ class WeeksPage extends PureComponent
                 this.setState({...this.state, weeksLoading: true}, () =>
                 {
                     this.activeScrollHeight = scrollHeight
-                    axios.get(`https://restful.achar.tv/week/?limit=10&page=${this.page}`, {headers: token ? {"Authorization": `${token}`} : null})
+                    axios.get(`https://restful.ketabekhoob.ir/week/?limit=10&page=${this.page}`, {headers: token ? {"Authorization": `${token}`} : null})
                         .then((res) =>
                         {
                             if (res.data.length > 0)
@@ -149,7 +149,7 @@ class WeeksPage extends PureComponent
                         <iframe title="book" className="book-iframe" onLoad={() => this.iframeLoad()} src={`${bookURL}&embedded=true`}/>
                     </div>
                 }
-                {bookLoading && <div className="book-loading"><MoonLoader size="70px" color="#66FFCC"/></div>}
+                {bookLoading && <div className="book-loading"><MoonLoader size="70px" color="#00A813"/></div>}
                 {
                     bookModal &&
                     <div className="modal-container" onClick={(e) => this.hideBookModal(e)}>
@@ -185,9 +185,9 @@ class WeeksPage extends PureComponent
                                  style={{"height": `${w.selected ? this.bookWrapper[i].scrollHeight : 0}px`}}>
                                 {
                                     w.books.map(b =>
-                                        <Material key={b._id} className="book-element" backgroundColor="rgba(102,255,204,.4)"
-                                                  onClick={(e) => this.showBookModal(e, `https://docs.google.com/viewerng/viewer?url=https://restful.achar.tv${b.file}`, b._id)}>
-                                            <img style={{"flexGrow": "1"}} alt="book" src={"https://restful.achar.tv" + b.picture} className="book-element-picture"/>
+                                        <Material key={b._id} className="book-element" backgroundColor="rgba(0,168,19,0.3)"
+                                                  onClick={(e) => this.showBookModal(e, `https://docs.google.com/viewerng/viewer?url=https://restful.ketabekhoob.ir${b.file}`, b._id)}>
+                                            <img style={{"flexGrow": "1"}} alt="book" src={"https://restful.ketabekhoob.ir" + b.picture} className="book-element-picture"/>
                                             <div className="book-element-details">
                                                 <div className="book-element-name">
                                                     {b.name}

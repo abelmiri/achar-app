@@ -110,7 +110,7 @@ class App extends PureComponent
         const {choice, phone} = this.state
         phone.length === 11 && this.setState({...this.state, loading: true, codeProblem: false, counter: 60, error: false}, () =>
         {
-            axios.post("https://restful.achar.tv/code/", {phone})
+            axios.post("https://restful.ketabekhoob.ir/code/", {phone})
                 .then(() =>
                 {
                     choice === "sign-up" ?
@@ -142,7 +142,7 @@ class App extends PureComponent
         code.length > 3 &&
         this.setState({...this.state, loading: true, codeError: false}, () =>
         {
-            axios.post("https://restful.achar.tv/user/login-sign-up/", {code, phone, name: name.trim()})
+            axios.post("https://restful.ketabekhoob.ir/user/login-sign-up/", {code, phone, name: name.trim()})
                 .then((res) => this.setState({...this.state, loading: false, user: res.data}, () => localStorage.setItem("user", JSON.stringify(res.data))))
                 .catch((err) =>
                 {
@@ -159,7 +159,7 @@ class App extends PureComponent
         code.length > 3 &&
         this.setState({...this.state, loading: true, codeError: false}, () =>
         {
-            axios.post("https://restful.achar.tv/user/login-sign-up/", {code, phone})
+            axios.post("https://restful.ketabekhoob.ir/user/login-sign-up/", {code, phone})
                 .then((res) => this.setState({...this.state, loading: false, user: res.data}, () => localStorage.setItem("user", JSON.stringify(res.data))))
                 .catch((err) =>
                 {

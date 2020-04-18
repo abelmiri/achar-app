@@ -28,7 +28,7 @@ class QuestionsPage extends PureComponent
         setTimeout(() => window.scroll({top: 0}), 100)
         const {bookId} = this.props
         const {token} = this.props.user
-        axios.get(`https://restful.achar.tv/question/${bookId}`, {headers: token ? {"Authorization": `${token}`} : null})
+        axios.get(`https://restful.ketabekhoob.ir/question/${bookId}`, {headers: token ? {"Authorization": `${token}`} : null})
             .then((res) =>
             {
                 res.data.questions[0].user_answer ?
@@ -64,10 +64,10 @@ class QuestionsPage extends PureComponent
             {
                 this.setState({...this.state, qLoading: true}, () =>
                 {
-                    axios.post(`https://restful.achar.tv/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
+                    axios.post(`https://restful.ketabekhoob.ir/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
                         .then((res) =>
                         {
-                            axios.post(`https://restful.achar.tv/lottery/`, {book_id: data.book._id}, {headers: token ? {"Authorization": `${token}`} : null})
+                            axios.post(`https://restful.ketabekhoob.ir/lottery/`, {book_id: data.book._id}, {headers: token ? {"Authorization": `${token}`} : null})
                                 .then((ans) => ans.statusCode === 200
                                     ? this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: false}) :
                                     this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: true}),
@@ -89,7 +89,7 @@ class QuestionsPage extends PureComponent
             if (data.questions[level].user_answer && data.questions[level + 1].user_answer) this.setState({...this.state, userAnswer: data.questions[level + 1].user_answer, level: level + 1})
             else if (data.questions[level].user_answer && !data.questions[level + 1].user_answer) this.setState({...this.state, userAnswer: 0, level: level + 1})
             else if (!data.questions[level].user_answer && data.questions[level + 1].user_answer) this.setState({...this.state, qLoading: true}, () =>
-                axios.post(`https://restful.achar.tv/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
+                axios.post(`https://restful.ketabekhoob.ir/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
                     .then((res) =>
                     {
                         this.setState({...this.state, questionAnswer: res.data})
@@ -105,7 +105,7 @@ class QuestionsPage extends PureComponent
                         this.setState({...this.state, qLoading: false})
                     }))
             else if (!data.questions[level].user_answer && !data.questions[level + 1].user_answer) this.setState({...this.state, qLoading: true}, () =>
-                axios.post(`https://restful.achar.tv/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
+                axios.post(`https://restful.ketabekhoob.ir/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
                     .then((res) =>
                     {
                         this.setState({...this.state, questionAnswer: res.data})

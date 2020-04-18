@@ -33,9 +33,9 @@
   cursor: pointer;
 
   &.inactive {
-    background-color: var(--secondary-color);
+    background-color: var(--inactive-color);
     transition-duration: $normal-animation-duration;
-    color: var(--inactive-color);
+    color: var(--secondary-color-light);
   }
 }
 

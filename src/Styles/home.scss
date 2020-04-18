@@ -61,18 +61,18 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
   margin: 25px 0;
   transition-duration: $normal-animation-duration;
-  color: var(--dark-color);
+  color: var(--secondary-color-light);
   cursor: pointer;
 
   &.inactive {
-    background-color: var(--secondary-color);
+    background-color: var(--inactive-color);
     transition-duration: $normal-animation-duration;
-    color: var(--inactive-color);
+    color: var(--secondary-color-light);
   }
 }
 
 .main-input {
-  border-bottom: 1px solid var(--grey-color);
+  border-bottom: 1px solid var(--dark-color);
   background-color: var(--background-color);
   transition: all ease $normal-animation-duration;
   font-size: 18px;
@@ -80,9 +80,10 @@
   padding: 15px;
   width: 200px;
   margin-bottom: 20px;
+  color: var(--secondary-color-light);
 
   &:focus {
-    border-bottom: 1px solid var(--dark-color);
+    border-bottom: 1px solid var(--grey-color);
   }
 }
 
@@ -117,6 +118,7 @@
 .counter-text {
   font-size: 18px;
   margin-top: 10px;
+  color: var(--inactive-color);
 }
 
 .error-text {

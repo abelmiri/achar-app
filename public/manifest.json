@@ -1,6 +1,6 @@
 {
-  "short_name": "Achar",
-  "name": "Achar - TV4",
+  "short_name": "کتاب خوب",
+  "name": "کتاب خوب",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,11 +20,11 @@
   ],
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#f0f0f0",
-  "background_color": "#f0f0f0",
+  "theme_color": "#2C2C2E",
+  "background_color": "#2C2C2E",
   "orientation": "portrait-primary",
   "dir": "rtl",
   "lang": "fa",
-  "description": "برنامه آچار - شبکه چهار",
+  "description": "برنامه کتاب خوب - شبکه چهار",
   "prefer_related_applications": false
 }
