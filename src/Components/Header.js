@@ -1,6 +1,5 @@
 import React, {PureComponent} from "react"
 import Logo from "../Media/Images/logo.png"
-import Icon from "../Media/Images/logo-colored.png"
 import Android from "../Media/Images/Android.png"
 import {Link} from "react-router-dom"
 import Material from "./Material"
@@ -162,7 +161,7 @@ class Header extends PureComponent
                     </div>
                 }
                 <Link to="/" className={`header-section ${user ? "" : "none"}`}>
-                    <img src={Icon} className="header-icon" alt="دانلود اپ"/>
+                    <img src={Logo} className="header-icon" alt="دانلود اپ"/>
                 </Link>
                 <div className="header-section">
                     <Link className={`header-link ${user ? "" : "show-mobile"}`} to="/">مشاهده برندگان</Link>
