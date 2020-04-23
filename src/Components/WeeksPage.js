@@ -184,7 +184,7 @@ class WeeksPage extends PureComponent
                             <div className="books-wrapper" ref={e => this.bookWrapper[i] = e}
                                  style={{"height": `${w.selected ? this.bookWrapper[i].scrollHeight : 0}px`}}>
                                 {
-                                    w.books.map(b =>
+                                    w.books && w.books.map(b =>
                                         <Material key={b._id} className="book-element" backgroundColor="rgba(0,168,19,0.3)"
                                                   onClick={(e) => this.showBookModal(e, `https://docs.google.com/viewerng/viewer?url=https://restful.ketabekhoob.ir${b.file}`, b._id)}>
                                             <img style={{"flexGrow": "1"}} alt="book" src={"https://restful.ketabekhoob.ir" + b.picture} className="book-element-picture"/>
