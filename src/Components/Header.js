@@ -135,36 +135,43 @@ class Header extends PureComponent
 
     render()
     {
-        const {user} = this.props
+        const {user, location} = this.props
         const {collapse} = this.state
         return (
-            <div className={`header-cont ${user ? "" : "center"}`}>
+            <div className={`header-cont ${user || location.pathname === "/about" || location.pathname === "/winners" ? "" : "center"}`}>
                 {
-                    user &&
-                    <div className="header-section">
-                        {/*desktop*/}
-                        <Link className="header-logo-link" to="/"><img className="header-logo" src={Logo} alt="logo"/></Link>
-                        <div className="header-name">{user.name || user.phone}</div>
-                        <Material className="header-log-out" onClick={this.logout}>خروج</Material>
-                        {/*desktop*/}
+                    user ?
+                        <div className="header-section">
+                            {/*desktop*/}
+                            <Link className="header-logo-link" to="/"><img className="header-logo" src={Logo} alt="logo"/></Link>
+                            <div className="header-name">{user.name || user.phone}</div>
+                            <Material className="header-log-out" onClick={this.logout}>خروج</Material>
+                            {/*desktop*/}
 
-                        {/*mobile*/}
-                        <Hamburger className="header-hamburger" collapse={collapse} onClick={collapse ? this.showSidebar : this.hideSidebar}/>
-                        <div className="header-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
-                        <div className="header-sidebar-container" style={{transform: "translateX(100%)"}} ref={e => this.sidebar = e}>
-                            <Link to="/" onClick={this.hideSidebar}><img className="header-logo-side" src={Logo} alt="logo"/></Link>
-                            <Material className="header-sidebar-btn name">{user.name || user.phone}</Material>
-                            <Link to="/" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">مشاهده برندگان</Material></Link>
-                            <Material className="header-sidebar-log-out" onClick={this.logout}>خروج از حساب</Material>
+                            {/*mobile*/}
+                            <Hamburger className="header-hamburger" collapse={collapse} onClick={collapse ? this.showSidebar : this.hideSidebar}/>
+                            <div className="header-sidebar-back" style={{opacity: "0", height: "0"}} ref={e => this.sidebarBack = e} onClick={this.hideSidebar}/>
+                            <div className="header-sidebar-container" style={{transform: "translateX(100%)"}} ref={e => this.sidebar = e}>
+                                <Link to="/" onClick={this.hideSidebar}><img className="header-logo-side" src={Logo} alt="logo"/></Link>
+                                <Material className="header-sidebar-btn name">{user.name || user.phone}</Material>
+                                <Link to="/about" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">درباره ما</Material></Link>
+                                <Link to="/winners" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">مشاهده برندگان</Material></Link>
+                                <Material className="header-sidebar-log-out" onClick={this.logout}>خروج از حساب</Material>
+                            </div>
+                            {/*mobile*/}
                         </div>
-                        {/*mobile*/}
-                    </div>
+                        :
+                        (location.pathname === "/about" || location.pathname === "/winners") &&
+                        <div className="header-section show-desktop">
+                            <Link className="header-logo-link" to="/"><img className="header-logo" src={Logo} alt="logo"/></Link>
+                        </div>
                 }
-                <Link to="/" className={`header-section ${user ? "" : "none"}`}>
-                    <img src={Logo} className="header-icon" alt="دانلود اپ"/>
+                <Link to="/" className={`header-section ${user || location.pathname === "/about" || location.pathname === "/winners" ? "" : "none"}`}>
+                    <img src={Logo} className="header-icon" alt="سایت کتاب خوب"/>
                 </Link>
                 <div className="header-section">
-                    <Link className={`header-link ${user ? "" : "show-mobile"}`} to="/">مشاهده برندگان</Link>
+                    <Link className={`header-link ${user || location.pathname === "/about" || location.pathname === "/winners" ? "" : "show-mobile"}`} to="/about"><Material backgroundColor="rgba(255,255,255,0.2)" className="header-link-material">درباره ما</Material></Link>
+                    <Link className={`header-link ${user || location.pathname === "/about" || location.pathname === "/winners" ? "" : "show-mobile"}`} to="/winners"><Material backgroundColor="rgba(255,255,255,0.2)" className="header-link-material">مشاهده برندگان</Material></Link>
                     <a href="/ketabekhoob.apk" download><img src={Android} className="header-app" alt="دانلود اپ"/></a>
                 </div>
             </div>
