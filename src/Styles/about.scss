@@ -3,6 +3,10 @@
   width: 100%;
   padding: 25px 20px;
   color: var(--secondary-color-light);
+  text-align: justify;
+  text-align-last: right;
+  line-height: 30px;
+  font-size: 14px;
 
   @media screen and (min-width: 768px) {
     width: 80%;

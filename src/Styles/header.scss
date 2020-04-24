@@ -36,7 +36,7 @@
 }
 
 .header-icon {
-  width: 50px;
+  width: 55px;
   @media screen and (min-width: 480px) {
     display: none;
   }
@@ -75,6 +75,12 @@
   display: inline-flex;
   align-items: center;
 
+  &.show-desktop {
+    @media screen and (max-width: 480px) {
+      display: none;
+    }
+  }
+
   &.none {
     display: none;
   }
@@ -83,7 +89,7 @@
 .header-link {
   font-size: 13px;
   font-weight: bold;
-  margin-left: 25px;
+  margin: 0 10px;
   color: var(--secondary-color-light);
 
   &.show-mobile {
@@ -97,9 +103,19 @@
   }
 }
 
+.header-link-material {
+  padding: 10px;
+  border-radius: 25px;
+}
+
 .header-app {
   display: block;
   width: 35px;
+  margin-right: 10px;
+
+  @media screen and (max-width: 480px) {
+    width: 30px;
+  }
 }
 
 .header-hamburger {
@@ -142,8 +158,7 @@
 }
 
 .header-sidebar-btn {
-  border-top: 1px solid var(--login-page-background-color);
-  border-bottom: 1px solid var(--login-page-background-color);
+  border-bottom: 1px solid var(--background-color);
   padding: 20px 15px;
   margin-top: -1px;
   background-color: inherit;
