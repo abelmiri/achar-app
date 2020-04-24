@@ -60,7 +60,7 @@ class QuestionsPage extends PureComponent
 
         if (data.questions_count === level + 1)
         {
-            if (data.questions[level].user_answer) this.setState({...this.state, redirect: true})
+            if (!data.questions[level].user_answer) this.setState({...this.state, redirect: true})
             else
             {
                 this.setState({...this.state, qLoading: true}, () =>
@@ -122,6 +122,70 @@ class QuestionsPage extends PureComponent
                         this.setState({...this.state, qLoading: false})
                     }))
         }
+        // if (data.questions_count === level + 1)
+        // {
+        //     if (data.questions[level].user_answer) this.setState({...this.state, redirect: true})
+        //     else
+        //     {
+        //         this.setState({...this.state, qLoading: true}, () =>
+        //         {
+        //             axios.post(`https://restful.ketabekhoob.ir/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
+        //                 .then((res) =>
+        //                 {
+        //                     axios.post(`https://restful.ketabekhoob.ir/lottery/`, {book_id: data.book._id}, {headers: token ? {"Authorization": `${token}`} : null})
+        //                         .then((ans) => ans.statusCode === 200
+        //                             ? this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: false}) :
+        //                             this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: true}),
+        //                         )
+        //                         .catch(() => this.setState({...this.state, questionAnswer: res.data, allCorrect: false}))
+        //                     setTimeout(() => this.setState({...this.state, redirect: true, questionAnswer: null, qLoading: false, userAnswer: 0}), 5000)
+        //                 })
+        //                 .catch((err) =>
+        //                 {
+        //                     console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err)
+        //                     this.setState({...this.state, qLoading: false})
+        //                 })
+        //         })
+        //     }
+        //
+        // }
+        // else
+        // {
+        //     if (data.questions[level].user_answer && data.questions[level + 1].user_answer) this.setState({...this.state, userAnswer: data.questions[level + 1].user_answer, level: level + 1})
+        //     else if (data.questions[level].user_answer && !data.questions[level + 1].user_answer) this.setState({...this.state, userAnswer: 0, level: level + 1})
+        //     else if (!data.questions[level].user_answer && data.questions[level + 1].user_answer) this.setState({...this.state, qLoading: true}, () =>
+        //         axios.post(`https://restful.ketabekhoob.ir/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
+        //             .then((res) =>
+        //             {
+        //                 this.setState({...this.state, questionAnswer: res.data})
+        //
+        //                 setTimeout(() =>
+        //                 {
+        //                     this.setState({...this.state, questionAnswer: null, qLoading: false, userAnswer: data.questions[level + 1].user_answer, level: level + 1})
+        //                 }, 3000)
+        //             })
+        //             .catch((err) =>
+        //             {
+        //                 console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err)
+        //                 this.setState({...this.state, qLoading: false})
+        //             }))
+        //     else if (!data.questions[level].user_answer && !data.questions[level + 1].user_answer) this.setState({...this.state, qLoading: true}, () =>
+        //         axios.post(`https://restful.ketabekhoob.ir/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
+        //             .then((res) =>
+        //             {
+        //                 this.setState({...this.state, questionAnswer: res.data})
+        //
+        //                 setTimeout(() =>
+        //                 {
+        //                     this.setState({...this.state, questionAnswer: null, qLoading: false, userAnswer: 0, level: level + 1})
+        //                 }, 5000)
+        //             })
+        //             .catch((err) =>
+        //             {
+        //                 console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err)
+        //                 this.setState({...this.state, qLoading: false})
+        //             }))
+        // }
     }
 
     render()
