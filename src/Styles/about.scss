@@ -1,0 +1,19 @@
+.about-us-cont {
+  animation: main-animation 1s ease;
+  width: 100%;
+  padding: 25px 20px;
+  color: var(--secondary-color-light);
+
+  @media screen and (min-width: 768px) {
+    width: 80%;
+  }
+  @media screen and (min-width: 1024px) {
+    width: 60%;
+  }
+  @media screen and (min-width: 1366px) {
+    width: 50%;
+  }
+  @media screen and (min-width: 1920px) {
+    width: 40%;
+  }
+}

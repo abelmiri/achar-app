@@ -1,16 +1,5 @@
 @import "variables";
 
-.home-wrapper {
-  margin-top: 80px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  animation: main-animation 1s ease;
-  min-height: calc(100vh - 80px);
-}
-
 .wrapper {
   margin-top: 80px;
   width: 100%;
@@ -19,6 +8,11 @@
   align-items: flex-start;
   min-height: calc(100vh - 80px);
   animation: main-animation 1s ease;
+
+  &.home {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 @keyframes main-animation {

@@ -12,6 +12,7 @@
   height: 80px;
   background-color: var(--background-color);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  transition: all linear 0.2s;
 
   &.center {
     justify-content: center;
@@ -82,7 +83,7 @@
 .header-link {
   font-size: 13px;
   font-weight: bold;
-  margin-left: 20px;
+  margin-left: 25px;
   color: var(--secondary-color-light);
 
   &.show-mobile {
@@ -98,9 +99,7 @@
 
 .header-app {
   display: block;
-  width: 50px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
-  border-radius: 50%;
+  width: 35px;
 }
 
 .header-hamburger {
