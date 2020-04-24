@@ -20,6 +20,7 @@ class QuestionsPage extends PureComponent
             allCorrect: false,
             late: false,
             questionAnswer: null,
+            error: false,
         }
     }
 
@@ -31,14 +32,14 @@ class QuestionsPage extends PureComponent
         axios.get(`https://restful.ketabekhoob.ir/question/${bookId}`, {headers: token ? {"Authorization": `${token}`} : null})
             .then((res) =>
             {
-                res.data.questions[0].user_answer ?
+                res.data.questions && res.data.questions.length > 0 && res.data.questions[0].user_answer ?
                     this.setState({...this.state, data: res.data, loading: false, userAnswer: res.data.questions[0].user_answer}, () => setTimeout(this.selectDefault, 250)) :
                     this.setState({...this.state, data: res.data, loading: false}, () => setTimeout(this.selectDefault, 250))
             })
             .catch((err) =>
             {
-                console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err.response)
-                this.setState({...this.state, loading: false})
+                console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err)
+                this.setState({...this.state, loading: false, error: true})
             })
     }
 
@@ -125,14 +126,9 @@ class QuestionsPage extends PureComponent
 
     render()
     {
-        const {loading, data, selected, level, userAnswer, questionAnswer, redirect, qLoading, allCorrect, late} = this.state
-        console.log(allCorrect)
-        if (loading) return (
-            <div className="loading-container">
-                <MoonLoader size="70px" color="#303030"/>
-            </div>
-        )
-        else if (data.questions.length > 0) return (
+        const {loading, data, selected, level, userAnswer, questionAnswer, redirect, qLoading, allCorrect, late, error} = this.state
+        if (loading) return <div className="loading-container"><MoonLoader size="70px" color="#707070"/></div>
+        else if (data.questions && data.questions.length > 0) return (
             <div className="questions-wrapper">
                 <div className="week-element" style={{"marginBottom": `${selected ? this.bookWrapper.scrollHeight + 25 : 25}px`}}>
                     <Material className="week-element-material">
@@ -205,11 +201,7 @@ class QuestionsPage extends PureComponent
                 }
             </div>
         )
-        else return (
-                <div className="loading-container">
-                    متأسفانه سوالی طرح نشده است
-                </div>
-            )
+        else return <div className="loading-container">{error ? "خطا در برقرای ارتباط" : "سوالی یافت نشد"}</div>
     }
 }
 

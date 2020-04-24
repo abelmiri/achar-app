@@ -20,6 +20,7 @@
 
 .loading-container {
   margin-top: 40vh;
+  color: var(--grey-color);
 }
 
 .weeks-wrapper {
@@ -240,4 +241,10 @@
   @media screen and (min-width: 1920px) {
     width: calc(35% - 40px);
   }
+}
+
+.weeks-loading {
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }

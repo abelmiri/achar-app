@@ -6,6 +6,7 @@ import axios from "axios"
 import WeeksPage from "./Components/WeeksPage"
 import QuestionsPage from "./Components/QuestionsPage"
 import Header from "./Components/Header"
+import SummaryPage from "./Components/SummaryPage"
 
 class App extends PureComponent
 {
@@ -169,7 +170,6 @@ class App extends PureComponent
         })
     }
 
-
     render()
     {
         const {user, choice, name, phone, code, loading, error, codeError, nextSignUpStep, nextLoginStep, counter, codeProblem} = this.state
@@ -183,7 +183,8 @@ class App extends PureComponent
                             <Switch>
                                 <Route exact path="/" render={() => <WeeksPage location={location} user={user}/>}/>
                                 <Route path="/questions/:bookId" render={(route) => <QuestionsPage user={user} bookId={route.match.params.bookId}/>}/>
-                                <Route path="/*" render={() => <Redirect to={"/"}/>}/>
+                                <Route path="/summary/:bookId" render={(route) => <SummaryPage user={user} bookId={route.match.params.bookId}/>}/>
+                                <Route path="/*" render={() => <Redirect to="/"/>}/>
                             </Switch>
                         </div>
                         :

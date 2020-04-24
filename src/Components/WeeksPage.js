@@ -12,12 +12,9 @@ class WeeksPage extends PureComponent
         super(props)
         this.state = {
             loading: true,
-            bookLoading: false,
-            iframeLoaded: false,
             weeksLoading: false,
             bookModal: false,
             weeks: [],
-            bookURL: "",
             bookId: "",
         }
         this.bookWrapper = [React.createRef()]
@@ -51,18 +48,6 @@ class WeeksPage extends PureComponent
     {
         window.removeEventListener("popstate", this.onPopState)
         document.removeEventListener("scroll", this.onScroll)
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot)
-    {
-        const {iframeLoaded} = this.state
-        if (prevProps.location !== this.props.location && iframeLoaded) this.setState({...this.state, bookModal: false, bookLoading: false, iframeLoaded: false})
-    }
-
-    onPopState = () =>
-    {
-        const {bookLoading, iframeLoaded} = this.state
-        if (bookLoading || iframeLoaded) this.setState({...this.state, bookModal: false, bookLoading: false, iframeLoaded: false})
     }
 
     onScroll = () =>
@@ -108,57 +93,35 @@ class WeeksPage extends PureComponent
         this.setState({...this.state, weeks: modifiedWeeks})
     }
 
-    showBookModal = (e, url, id) =>
+    showBookModal = (e, id) =>
     {
         e.stopPropagation()
-        this.setState({...this.state, bookModal: true, bookURL: url, bookId: id})
+        this.setState({...this.state, bookModal: true, bookId: id})
     }
 
     hideBookModal = (e) =>
     {
         e.preventDefault()
-        this.setState({...this.state, bookModal: false, bookLoading: false, iframeLoaded: false})
-    }
-
-    bookLoading = (e) =>
-    {
-        e.stopPropagation()
-        this.setState({...this.state, bookLoading: true}, () =>
-            window.history.pushState("", "", "/show-book"),
-        )
-    }
-
-    iframeLoad = () =>
-    {
-        this.setState({...this.state, iframeLoaded: true, bookLoading: false, bookModal: false})
+        this.setState({...this.state, bookModal: false})
     }
 
     render()
     {
-        const {loading, bookLoading, iframeLoaded, weeks, bookModal, weeksLoading, bookURL, bookId} = this.state
-        if (loading) return (
-            <div className="loading-container">
-                <MoonLoader size="70px" color="#303030"/>
-            </div>
-        )
+        const {loading, weeks, bookModal, weeksLoading, bookId} = this.state
+        if (loading) return <div className="loading-container"><MoonLoader size="70px" color="#707070"/></div>
         else return (
             <div className="weeks-wrapper">
-                {
-                    (iframeLoaded || bookLoading) &&
-                    <div key={bookURL} className={iframeLoaded ? "iframe-container" : "iframe-unloaded"}>
-                        <iframe title="book" className="book-iframe" onLoad={() => this.iframeLoad()} src={`${bookURL}&embedded=true`}/>
-                    </div>
-                }
-                {bookLoading && <div className="book-loading"><MoonLoader size="70px" color="#00A813"/></div>}
                 {
                     bookModal &&
                     <div className="modal-container" onClick={(e) => this.hideBookModal(e)}>
                         <div className="modal-body" onClick={(e) => e.stopPropagation()}>
-                            <Material className={`main-button`} onClick={(e) => this.bookLoading(e)}>
-                                مشاهده‌ی کتاب
-                            </Material>
+                            <Link to={`/summary/${bookId}`}>
+                                <Material className="main-button">
+                                    خلاصه کتاب
+                                </Material>
+                            </Link>
                             <Link to={`/questions/${bookId}`}>
-                                <Material className={`main-button`} onClick={() => null}>
+                                <Material className="main-button">
                                     شرکت در آزمون
                                 </Material>
                             </Link>
@@ -185,8 +148,7 @@ class WeeksPage extends PureComponent
                                  style={{"height": `${w.selected ? this.bookWrapper[i].scrollHeight : 0}px`}}>
                                 {
                                     w.books && w.books.map(b =>
-                                        <Material key={b._id} className="book-element" backgroundColor="rgba(0,168,19,0.3)"
-                                                  onClick={(e) => this.showBookModal(e, `https://docs.google.com/viewerng/viewer?url=https://restful.ketabekhoob.ir${b.file}`, b._id)}>
+                                        <Material key={b._id} className="book-element" backgroundColor="rgba(0,168,19,0.3)" onClick={(e) => this.showBookModal(e, b._id)}>
                                             <img style={{"flexGrow": "1"}} alt="book" src={"https://restful.ketabekhoob.ir" + b.picture} className="book-element-picture"/>
                                             <div className="book-element-details">
                                                 <div className="book-element-name">
@@ -206,7 +168,7 @@ class WeeksPage extends PureComponent
                         </div>,
                     )
                 }
-                {weeksLoading && <div><MoonLoader size="30px" color="#66FFCC"/></div>}
+                {weeksLoading && <div className="weeks-loading"><MoonLoader size="30px" color="#66FFCC"/></div>}
             </div>
         )
     }
