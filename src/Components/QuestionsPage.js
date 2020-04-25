@@ -70,9 +70,11 @@ class QuestionsPage extends PureComponent
                         .then((res) =>
                         {
                             axios.post(`https://restful.ketabekhoob.ir/lottery/`, {book_id: data.book._id}, {headers: token ? {"Authorization": `${token}`} : null})
-                                .then((ans) => ans.statusCode === 200
-                                    ? this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: false}) :
-                                    this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: true}),
+                                .then((ans) =>
+                                    ans.status === 200 ?
+                                        this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: false})
+                                        :
+                                        this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: true}),
                                 )
                                 .catch(() => this.setState({...this.state, questionAnswer: res.data, allCorrect: false}))
                             setTimeout(() =>
@@ -236,7 +238,8 @@ class QuestionsPage extends PureComponent
                         <div className="correct-answer">
                             {
                                 late ?
-                                    "تبریک! تمام پاسخ های شما صحیح بود" :
+                                    "تبریک! تمام پاسخ های شما صحیح بود"
+                                    :
                                     "تبریک! تمام پاسخ های شما صحیح بود و در قرعه‌کشی شرکت خواهید کرد"
                             }
                         </div>
