@@ -2,6 +2,13 @@ const app = require("express")()
 const fs = require("fs")
 const path = require("path")
 
+app.route("/site-map").get((req, res) =>
+{
+    res.send("https://www.ketabekhoob.ir\nhttps://www.ketabekhoob.ir/about\nhttps://www.ketabekhoob.ir/winners")
+})
+
+app.route("/.well-known/assetlinks.json").get((req, res) => res.sendFile(path.join(__dirname, "assetlinks.json")))
+
 app.route("/:file").get((req, res) =>
 {
     res.setHeader("Access-Control-Allow-Origin", "*")
@@ -18,8 +25,6 @@ app.route("/:file").get((req, res) =>
         res.sendFile(path.join(__dirname, "index.html"))
     }
 })
-
-app.route("/.well-known/assetlinks.json").get((req, res) => res.sendFile(path.join(__dirname, "assetlinks.json")))
 
 app.route("*").get((req, res) =>
 {
