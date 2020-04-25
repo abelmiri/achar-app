@@ -55,12 +55,13 @@ class QuestionsPage extends PureComponent
 
     nextQuestion = (qId) =>
     {
-        const {data, level, userAnswer} = this.state
-        const {token} = this.props.user
+        const {data, level, userAnswer, questionAnswer} = this.state
+        const {bookId, user} = this.props
+        const {token} = user
 
         if (data.questions_count === level + 1)
         {
-            if (!data.questions[level].user_answer) this.setState({...this.state, redirect: true})
+            if (data.questions[level].user_answer || questionAnswer) this.setState({...this.state, redirect: true})
             else
             {
                 this.setState({...this.state, qLoading: true}, () =>
@@ -74,7 +75,20 @@ class QuestionsPage extends PureComponent
                                     this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: true}),
                                 )
                                 .catch(() => this.setState({...this.state, questionAnswer: res.data, allCorrect: false}))
-                            setTimeout(() => this.setState({...this.state, redirect: true, questionAnswer: null, qLoading: false, userAnswer: 0}), 5000)
+                            setTimeout(() =>
+                            {
+                                axios.get(`https://restful.ketabekhoob.ir/question/${bookId}`, {headers: token ? {"Authorization": `${token}`} : null})
+                                    .then((res) =>
+                                    {
+                                        res.data.questions && res.data.questions.length > 0 &&
+                                        this.setState({...this.state, data: res.data, loading: false, qLoading: false})
+                                    })
+                                    .catch((err) =>
+                                    {
+                                        console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err)
+                                        this.setState({...this.state, loading: false, error: true})
+                                    })
+                            }, 500)
                         })
                         .catch((err) =>
                         {
@@ -87,19 +101,13 @@ class QuestionsPage extends PureComponent
         }
         else
         {
-            if (data.questions[level].user_answer && data.questions[level + 1].user_answer) this.setState({...this.state, userAnswer: data.questions[level + 1].user_answer, level: level + 1})
-            else if (data.questions[level].user_answer && !data.questions[level + 1].user_answer) this.setState({...this.state, userAnswer: 0, level: level + 1})
+            if (data.questions[level].user_answer && data.questions[level + 1].user_answer) this.setState({...this.state, userAnswer: data.questions[level + 1].user_answer, level: level + 1},
+                () => this.adjustHeights())
+            else if (data.questions[level].user_answer && !data.questions[level + 1].user_answer) this.setState({...this.state, userAnswer: 0, level: level + 1},
+                () => this.adjustHeights())
             else if (!data.questions[level].user_answer && data.questions[level + 1].user_answer) this.setState({...this.state, qLoading: true}, () =>
                 axios.post(`https://restful.ketabekhoob.ir/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
-                    .then((res) =>
-                    {
-                        this.setState({...this.state, questionAnswer: res.data})
-
-                        setTimeout(() =>
-                        {
-                            this.setState({...this.state, questionAnswer: null, qLoading: false, userAnswer: data.questions[level + 1].user_answer, level: level + 1})
-                        }, 3000)
-                    })
+                    .then(() => this.setState({...this.state, questionAnswer: null, qLoading: false, userAnswer: data.questions[level + 1].user_answer, level: level + 1}, () => this.adjustHeights()))
                     .catch((err) =>
                     {
                         console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err)
@@ -107,85 +115,32 @@ class QuestionsPage extends PureComponent
                     }))
             else if (!data.questions[level].user_answer && !data.questions[level + 1].user_answer) this.setState({...this.state, qLoading: true}, () =>
                 axios.post(`https://restful.ketabekhoob.ir/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
-                    .then((res) =>
-                    {
-                        this.setState({...this.state, questionAnswer: res.data})
-
-                        setTimeout(() =>
-                        {
-                            this.setState({...this.state, questionAnswer: null, qLoading: false, userAnswer: 0, level: level + 1})
-                        }, 5000)
-                    })
+                    .then(() => this.setState({...this.state, questionAnswer: null, qLoading: false, userAnswer: 0, level: level + 1}, () => this.adjustHeights()))
                     .catch((err) =>
                     {
                         console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err)
                         this.setState({...this.state, qLoading: false})
                     }))
         }
-        // if (data.questions_count === level + 1)
-        // {
-        //     if (data.questions[level].user_answer) this.setState({...this.state, redirect: true})
-        //     else
-        //     {
-        //         this.setState({...this.state, qLoading: true}, () =>
-        //         {
-        //             axios.post(`https://restful.ketabekhoob.ir/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
-        //                 .then((res) =>
-        //                 {
-        //                     axios.post(`https://restful.ketabekhoob.ir/lottery/`, {book_id: data.book._id}, {headers: token ? {"Authorization": `${token}`} : null})
-        //                         .then((ans) => ans.statusCode === 200
-        //                             ? this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: false}) :
-        //                             this.setState({...this.state, questionAnswer: res.data, allCorrect: true, late: true}),
-        //                         )
-        //                         .catch(() => this.setState({...this.state, questionAnswer: res.data, allCorrect: false}))
-        //                     setTimeout(() => this.setState({...this.state, redirect: true, questionAnswer: null, qLoading: false, userAnswer: 0}), 5000)
-        //                 })
-        //                 .catch((err) =>
-        //                 {
-        //                     console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err)
-        //                     this.setState({...this.state, qLoading: false})
-        //                 })
-        //         })
-        //     }
-        //
-        // }
-        // else
-        // {
-        //     if (data.questions[level].user_answer && data.questions[level + 1].user_answer) this.setState({...this.state, userAnswer: data.questions[level + 1].user_answer, level: level + 1})
-        //     else if (data.questions[level].user_answer && !data.questions[level + 1].user_answer) this.setState({...this.state, userAnswer: 0, level: level + 1})
-        //     else if (!data.questions[level].user_answer && data.questions[level + 1].user_answer) this.setState({...this.state, qLoading: true}, () =>
-        //         axios.post(`https://restful.ketabekhoob.ir/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
-        //             .then((res) =>
-        //             {
-        //                 this.setState({...this.state, questionAnswer: res.data})
-        //
-        //                 setTimeout(() =>
-        //                 {
-        //                     this.setState({...this.state, questionAnswer: null, qLoading: false, userAnswer: data.questions[level + 1].user_answer, level: level + 1})
-        //                 }, 3000)
-        //             })
-        //             .catch((err) =>
-        //             {
-        //                 console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err)
-        //                 this.setState({...this.state, qLoading: false})
-        //             }))
-        //     else if (!data.questions[level].user_answer && !data.questions[level + 1].user_answer) this.setState({...this.state, qLoading: true}, () =>
-        //         axios.post(`https://restful.ketabekhoob.ir/answer/`, {user_answer: userAnswer, question_id: qId}, {headers: token ? {"Authorization": `${token}`} : null})
-        //             .then((res) =>
-        //             {
-        //                 this.setState({...this.state, questionAnswer: res.data})
-        //
-        //                 setTimeout(() =>
-        //                 {
-        //                     this.setState({...this.state, questionAnswer: null, qLoading: false, userAnswer: 0, level: level + 1})
-        //                 }, 5000)
-        //             })
-        //             .catch((err) =>
-        //             {
-        //                 console.log(" %cERROR ", "color: orange; font-size:12px; font-family: 'Helvetica', consolas, sans-serif; font-weight:900;", err)
-        //                 this.setState({...this.state, qLoading: false})
-        //             }))
-        // }
+    }
+
+    backToStart = () =>
+    {
+        const {data} = this.state
+        this.setState({...this.state, loading: false, userAnswer: data.questions[0].user_answer, level: 0}, () => this.adjustHeights())
+    }
+
+    adjustHeights = () =>
+    {
+        setTimeout(() => this.bookWrapper ? this.bookWrapper.style.height = "0px" : null, 50)
+        setTimeout(() =>
+        {
+            if (this.bookWrapper && this.weekElement)
+            {
+                this.weekElement.style.marginBottom = (this.bookWrapper.scrollHeight + 25) + "px"
+                this.bookWrapper.style.height = this.bookWrapper.scrollHeight + "px"
+            }
+        }, 300)
     }
 
     render()
@@ -194,7 +149,7 @@ class QuestionsPage extends PureComponent
         if (loading) return <div className="loading-container"><MoonLoader size="70px" color="#707070"/></div>
         else if (data.questions && data.questions.length > 0) return (
             <div className="questions-wrapper">
-                <div className="week-element" style={{"marginBottom": `${selected ? this.bookWrapper.scrollHeight + 25 : 25}px`}}>
+                <div className="week-element" ref={e => this.weekElement = e} style={{"marginBottom": `${selected ? this.bookWrapper.scrollHeight + 25 : 25}px`}}>
                     <Material className="week-element-material">
                         <div>
                             آزمون
@@ -232,19 +187,47 @@ class QuestionsPage extends PureComponent
                                 <span className="checkmark"/>
                             </label>
                         </div>
-                        <Material className={`next-button ${(userAnswer === 0 || qLoading) && "inactive"}`}
-                                  onClick={() => (userAnswer !== 0 && !qLoading) && this.nextQuestion(data.questions[level]._id)}>
-                            {data.questions_count === level + 1 ? "پایان آزمون" : "سوال بعدی"}
-                        </Material>
+                        <div className="questions-buttons-container">
+                            <Material className={`questions-button next ${(userAnswer === 0 || qLoading) && "inactive"}`}
+                                      onClick={() => (userAnswer !== 0 && !qLoading) && this.nextQuestion(data.questions[level]._id)}>
+                                {data.questions_count === level + 1 ? questionAnswer ? "صفحه اصلی" : "پایان آزمون" : "سوال بعدی"}
+                            </Material>
+                            {
+                                data.questions_count === level + 1 && (questionAnswer || data.questions[level].user_answer) &&
+                                <Material className={`questions-button previous`}
+                                          onClick={() => this.backToStart()}>
+                                    نمایش پاسخنامه
+                                </Material>
+                            }
+                        </div>
                     </div>
                 </div>
+                {/*{*/}
+                {/*    questionAnswer &&*/}
+                {/*    <div className={questionAnswer.is_correct ? "correct-answer" : "wrong-answer"}>*/}
+                {/*        {*/}
+                {/*            `${questionAnswer.is_correct ? "آفرین! پاسخ شما صحیح بود" : `متاسفانه پاسخ صحیح گزینه ${questionAnswer.correct_answer} بود`}`*/}
+                {/*        }*/}
+                {/*    </div>*/}
+                {/*}*/}
                 {
-                    questionAnswer &&
-                    <div className={questionAnswer.is_correct ? "correct-answer" : "wrong-answer"}>
+                    data.questions[level].user_answer &&
+                    <div className={data.questions[level].correct_answer === data.questions[level].user_answer ? "correct-answer" : "wrong-answer"}>
                         {
-                            `${questionAnswer.is_correct ? "آفرین! پاسخ شما صحیح بود" : `متاسفانه پاسخ صحیح گزینه ${questionAnswer.correct_answer} بود`}`
+                            `${data.questions[level].correct_answer === data.questions[level].user_answer ? "آفرین! پاسخ شما صحیح بود" : `متاسفانه پاسخ صحیح گزینه ${data.questions[level].correct_answer} بود`}`
                         }
                     </div>
+                }
+                {
+                    data.questions_count === level + 1 && data.questions[level].user_answer &&
+                    <React.Fragment>
+                        <hr/>
+                        <div className="correct-answer">
+                            {
+                                `شما به ${data.corrects_count} سوال از ${data.questions_count} سوال پاسخ صحیح داده‌اید`
+                            }
+                        </div>
+                    </React.Fragment>
                 }
                 {
                     allCorrect &&

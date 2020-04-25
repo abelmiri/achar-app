@@ -19,9 +19,14 @@
   }
 }
 
-.next-button {
-  border-radius: 0 0 15px 15px;
-  background-color: var(--primary-color);
+.questions-buttons-container {
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  width: 100%;
+}
+
+.questions-button {
   padding: 15px;
   min-width: 120px;
   text-align: center;
@@ -31,6 +36,16 @@
   transition-duration: $normal-animation-duration;
   color: var(--dark-color);
   cursor: pointer;
+  flex-grow: 1;
+
+  &.next {
+    background-color: var(--primary-color);
+  }
+
+  &.previous {
+    background-color: var(--dark-color);
+    color: var(--primary-color);
+  }
 
   &.inactive {
     background-color: var(--inactive-color);

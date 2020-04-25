@@ -112,7 +112,8 @@
 
   &.shadow {
     box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
-    background-color: var(--secondary-color-light);
+    background-color: var(--dark-color);
+    color: white;
   }
 }
 
