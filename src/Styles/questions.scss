@@ -30,13 +30,14 @@
   padding: 15px;
   min-width: 120px;
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, .15);
   margin: 25px 0 0 0;
   transition-duration: $normal-animation-duration;
   color: var(--dark-color);
   cursor: pointer;
   flex-grow: 1;
+  white-space: nowrap;
 
   &.next {
     background-color: var(--primary-color);

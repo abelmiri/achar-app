@@ -194,7 +194,7 @@ class QuestionsPage extends PureComponent
                             </Material>
                             {
                                 data.questions_count === level + 1 && (questionAnswer || data.questions[level].user_answer) &&
-                                <Material className={`questions-button previous`}
+                                <Material className="questions-button previous"
                                           onClick={() => this.backToStart()}>
                                     نمایش پاسخنامه
                                 </Material>
