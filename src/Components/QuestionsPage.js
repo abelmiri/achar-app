@@ -211,7 +211,7 @@ class QuestionsPage extends PureComponent
                 {/*    </div>*/}
                 {/*}*/}
                 {
-                    data.questions[level].user_answer &&
+                    data.questions[data.questions_count - 1].user_answer &&
                     <div className={data.questions[level].correct_answer === data.questions[level].user_answer ? "correct-answer" : "wrong-answer"}>
                         {
                             `${data.questions[level].correct_answer === data.questions[level].user_answer ? "آفرین! پاسخ شما صحیح بود" : `متاسفانه پاسخ صحیح گزینه ${data.questions[level].correct_answer} بود`}`
