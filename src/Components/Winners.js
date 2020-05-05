@@ -12,8 +12,8 @@ class Winners extends PureComponent
                     <div className="phone-direction">
                         <div>091091***69</div>
                         <div>091962***99</div>
-                        <div>09124456675</div>
-                        <div>09192490695</div>
+                        <div>091244***75</div>
+                        <div>091924***95</div>
                     </div>
                 </div>
 
