@@ -6,7 +6,27 @@ class Winners extends PureComponent
     {
         return (
             <div className="winners-cont">
-                اسامی برندگان هرشب را در این صفحه مشاهده کنید.
+
+                <div className="winners-section">
+                    <div className="winners-day">برندگان شب اول، 6 اردیبهشت</div>
+                    <div className="phone-direction">
+                        <div>091091***69</div>
+                        <div>091962***99</div>
+                        <div>09124456675</div>
+                        <div>09192490695</div>
+                    </div>
+                </div>
+
+                <div className="winners-section">
+                    <div className="winners-day">برندگان شب دوم، 7 اردیبهشت</div>
+                    <div className="phone-direction">
+                        <div>093881***38</div>
+                        <div>093854***99</div>
+                        <div>090355***93</div>
+                        <div>091647***84</div>
+                    </div>
+                </div>
+
             </div>
         )
     }

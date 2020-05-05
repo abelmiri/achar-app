@@ -167,7 +167,7 @@ class QuestionsPage extends PureComponent
                     </Material>
                     <div className="books-wrapper shadow" ref={e => this.bookWrapper = e} style={{"height": `${selected ? this.bookWrapper.scrollHeight : 0}px`}}>
                         <div className="questions-container">
-                            <div className="question">{`${level + 1} _ ${data.questions[level].question_text}`}</div>
+                            <div className="question">{`${level + 1}. ${data.questions[level].question_text}`}</div>
                             <label className="answer container">
                                 {`${data.questions[level].first_answer}`}
                                 <input type="radio" name="radio" checked={userAnswer === 1} onChange={() => this.selectUserAnswer(1, level)}/>

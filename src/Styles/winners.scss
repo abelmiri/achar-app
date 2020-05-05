@@ -1,21 +1,33 @@
 .winners-cont {
   animation: main-animation 1s ease;
-  width: 100%;
-  padding: 25px 20px;
   color: var(--secondary-color-light);
   text-align: center;
   font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 20px calc(10% - 20px);
+}
 
-  @media screen and (min-width: 768px) {
-    width: 80%;
-  }
-  @media screen and (min-width: 1024px) {
-    width: 60%;
-  }
-  @media screen and (min-width: 1366px) {
-    width: 50%;
-  }
-  @media screen and (min-width: 1920px) {
-    width: 40%;
-  }
+.winners-section {
+  flex-grow: 1;
+  margin: 10px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.phone-direction {
+  direction: ltr;
+  line-height: 35px;
+}
+
+.winners-day {
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
 }
