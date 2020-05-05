@@ -76,6 +76,10 @@
   margin-bottom: 20px;
   color: var(--secondary-color-light);
 
+  &::placeholder {
+    font-size: 14px;
+  }
+
   &:focus {
     border-bottom: 1px solid var(--grey-color);
   }

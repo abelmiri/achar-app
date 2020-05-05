@@ -202,7 +202,7 @@ class App extends PureComponent
                                         {
                                             choice === "login" &&
                                             <React.Fragment>
-                                                <input className="main-input" value={phone} placeholder="شماره" type="number" onChange={(event) => this.setPhone(event.target.value.trim())}/>
+                                                <input className="main-input" value={phone} placeholder="شماره | مثال: 09123456789" type="number" onChange={(event) => this.setPhone(event.target.value.trim())}/>
                                                 {
                                                     nextLoginStep ?
                                                         <React.Fragment>
@@ -222,9 +222,9 @@ class App extends PureComponent
                                         {
                                             choice === "sign-up" &&
                                             <React.Fragment>
-                                                <input className="main-input" value={name} placeholder="نام" maxLength="32" type="name"
+                                                <input className="main-input" value={name} placeholder="نام و نام خانوادگی" maxLength="32" type="name"
                                                        onChange={(event) => this.setName(event.target.value.toLowerCase())}/>
-                                                <input className="main-input" value={phone} placeholder="شماره" type="number" onChange={(event) => this.setPhone(event.target.value.trim())}/>
+                                                <input className="main-input" value={phone} placeholder="شماره | مثال: 09123456789" type="number" onChange={(event) => this.setPhone(event.target.value.trim())}/>
                                                 {
                                                     nextSignUpStep ?
                                                         <React.Fragment>
