@@ -34,7 +34,7 @@ class SummaryPage extends PureComponent
         else if (book)
             return (
                 <div className="summary-cont">
-                    <div className="summary-cont-title">خلاصه کتاب {book.name}:</div>
+                    <div className="summary-cont-title">گزیده‌ای از کتاب {book.name}:</div>
                     {book?.summary}
                 </div>
             )

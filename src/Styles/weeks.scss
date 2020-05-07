@@ -217,7 +217,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.7);
   animation: main-animation $normal-animation-duration ease;
   display: flex;
   justify-content: center;
@@ -225,7 +225,7 @@
 }
 
 .modal-body {
-  width: calc(81.5% - 40px);
+  width: calc(90% - 40px);
   padding: 20px;
   border-radius: 15px;
   background-color: var(--background-color);

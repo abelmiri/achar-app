@@ -34,6 +34,14 @@ class App extends PureComponent
 
     componentDidMount()
     {
+        const {location} = this.props
+        if (location.pathname.includes("/show-picture"))
+        {
+            let currentPath = location.pathname.replace("/show-picture", "")
+            window.history.replaceState("", "", currentPath ? currentPath : "/")
+            document.location.reload()
+        }
+
         let user = null
 
         if (localStorage.hasOwnProperty("user"))

@@ -1,0 +1,33 @@
+.back-cont {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  background-color: var(--inactive-color);
+  animation: fade-in-back ease-in-out 0.2s;
+
+  &.hide {
+    opacity: 0;
+    animation: fade-out-back ease-in-out 0.3s;
+  }
+}
+
+@keyframes fade-out-back {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in-back {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

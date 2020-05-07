@@ -4,6 +4,7 @@ import {MoonLoader} from "react-spinners"
 import ArrowSvg from "../Media/Svgs/arrow_svg"
 import Material from "./Material"
 import {Link} from "react-router-dom"
+import ImageShow from "./ImageShow"
 
 class WeeksPage extends PureComponent
 {
@@ -117,7 +118,7 @@ class WeeksPage extends PureComponent
                         <div className="modal-body" onClick={(e) => e.stopPropagation()}>
                             <Link to={`/summary/${bookId}`}>
                                 <Material className="main-button">
-                                    خلاصه کتاب
+                                    گزیده‌ای از کتاب
                                 </Material>
                             </Link>
                             <Link to={`/questions/${bookId}`}>
@@ -149,7 +150,7 @@ class WeeksPage extends PureComponent
                                 {
                                     w.books && w.books.map(b =>
                                         <Material key={b._id} className="book-element" backgroundColor="rgba(0,168,19,0.3)" onClick={(e) => this.showBookModal(e, b._id)}>
-                                            <img style={{"flexGrow": "1"}} alt="book" src={"https://restful.ketabekhoob.ir" + b.picture} className="book-element-picture"/>
+                                            <ImageShow style={{"flexGrow": "1"}} alt="book" src={"https://restful.ketabekhoob.ir" + b.picture} className="book-element-picture"/>
                                             <div className="book-element-details">
                                                 <div className="book-element-name">
                                                     {b.name}
