@@ -10,7 +10,7 @@ class Winners extends PureComponent
                 <div className="winners-section">
                     <div className="winners-day">برندگان شب اول، 6 اردیبهشت</div>
                     <div className="phone-direction">
-                        <div>091091***69</div>
+                        <div>091091***63</div>
                         <div>091962***99</div>
                         <div>091244***75</div>
                         <div>091924***95</div>
