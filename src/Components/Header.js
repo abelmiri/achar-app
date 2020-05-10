@@ -156,6 +156,7 @@ class Header extends PureComponent
                                 <Material className="header-sidebar-btn name">{user.name || user.phone}</Material>
                                 <Link to="/about" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">درباره ما</Material></Link>
                                 <Link to="/winners" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">مشاهده برندگان</Material></Link>
+                                {user?.role === "admin" && <Link to="/lottery" className="header-sidebar-link" onClick={this.hideSidebar}><Material className="header-sidebar-btn">قرعه کشی</Material></Link>}
                                 <Material className="header-sidebar-log-out" onClick={this.logout}>خروج از حساب</Material>
                             </div>
                             {/*mobile*/}
@@ -170,6 +171,7 @@ class Header extends PureComponent
                     <img src={Logo} className="header-icon" alt="سایت کتاب خوب"/>
                 </Link>
                 <div className="header-section">
+                    {user?.role === "admin" && <Link className={`header-link ${user || location.pathname === "/about" || location.pathname === "/winners" ? "" : "show-mobile"}`} to="/lottery"><Material backgroundColor="rgba(255,255,255,0.2)" className="header-link-material">قرعه کشی</Material></Link>}
                     <Link className={`header-link ${user || location.pathname === "/about" || location.pathname === "/winners" ? "" : "show-mobile"}`} to="/about"><Material backgroundColor="rgba(255,255,255,0.2)" className="header-link-material">درباره ما</Material></Link>
                     <Link className={`header-link ${user || location.pathname === "/about" || location.pathname === "/winners" ? "" : "show-mobile"}`} to="/winners"><Material backgroundColor="rgba(255,255,255,0.2)" className="header-link-material">مشاهده برندگان</Material></Link>
                     <a href="/ketabekhoob.apk" download><img src={Android} className="header-app" alt="دانلود اپ"/></a>

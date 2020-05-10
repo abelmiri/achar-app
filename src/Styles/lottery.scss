@@ -7,12 +7,21 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+
+  @media screen and (max-width: 480px) {
+    padding: 20px 5%;
+  }
 }
 
 .lottery-title {
+  min-width: 100%;
   margin-top: 20px;
   font-size: 45px;
   color: var(--secondary-color-light);
+
+  @media screen and (max-width: 480px) {
+    font-size: 35px;
+  }
 }
 
 .lottery-input {
@@ -39,6 +48,11 @@
   height: 120px;
   border-radius: 50%;
   cursor: pointer;
+
+  @media screen and (max-width: 480px) {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .lottery-sub {
@@ -51,6 +65,11 @@
   &.active {
     fill: var(--primary-color);
   }
+
+  @media screen and (max-width: 480px) {
+    width: 130px;
+    height: 130px;
+  }
 }
 
 .lottery-winners {
@@ -60,6 +79,10 @@
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+
+  @media screen and (max-width: 480px) {
+    width: 90%;
+  }
 }
 
 .lottery-loading-modal {
