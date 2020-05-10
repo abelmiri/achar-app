@@ -9,6 +9,7 @@ import Header from "./Components/Header"
 import SummaryPage from "./Components/SummaryPage"
 import AboutUs from "./Components/AboutUs"
 import Winners from "./Components/Winners"
+import Lottery from "./Components/Lottery"
 
 class App extends PureComponent
 {
@@ -192,6 +193,7 @@ class App extends PureComponent
                         <div className="wrapper">
                             <Switch>
                                 <Route exact path="/" render={() => <WeeksPage location={location} user={user}/>}/>
+                                {user?.role === "admin" && <Route path="/lottery" render={() => <Lottery user={user}/>}/>}
                                 <Route path="/about" render={() => <AboutUs/>}/>
                                 <Route path="/winners" render={() => <Winners/>}/>
                                 <Route path="/questions/:bookId" render={(route) => <QuestionsPage user={user} bookId={route.match.params.bookId}/>}/>
