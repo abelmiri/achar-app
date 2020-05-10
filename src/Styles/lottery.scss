@@ -75,13 +75,78 @@
 .lottery-winners {
   position: fixed;
   z-index: 2;
-  width: 50%;
+  width: 40%;
+  height: 250px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+  overflow: hidden;
+  background-color: #282829;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  animation: lottery ease-in-out 0.7s;
 
   @media screen and (max-width: 480px) {
     width: 90%;
+    animation: lottery-mob ease-in-out 0.7s;
+  }
+}
+
+@keyframes lottery {
+  0% {
+    left: -200px;
+    width: 250px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+
+  75% {
+    left: 50%;
+    width: 250px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+
+  80% {
+    left: 50%;
+    width: 250px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+
+  100% {
+    width: 40%;
+    border-radius: 5px;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes lottery-mob {
+  0% {
+    left: -200px;
+    width: 250px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+
+  75% {
+    left: 50%;
+    width: 250px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+
+  80% {
+    left: 50%;
+    width: 250px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+
+  100% {
+    width: 90%;
+    border-radius: 5px;
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 

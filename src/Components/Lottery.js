@@ -73,10 +73,10 @@ class Lottery extends PureComponent
                                 <MoonLoader size="70px" color="#707070"/>
                                 :
                                 <div className="lottery-winners" onClick={e => e.stopPropagation()}>
-                                    <div className="winners-section">
+                                    <div className="winners-section anime">
                                         <div className="winners-day">برندگان {split[2]} اردیبهشت</div>
                                         <div className="phone-direction">
-                                            {users.map(user => <div>{user.phone}</div>)}
+                                            {users.map(user => <div key={user.phone}>{user.phone}</div>)}
                                         </div>
                                     </div>
                                 </div>
