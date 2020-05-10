@@ -20,10 +20,9 @@
   color: var(--secondary-color-light);
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 
-  &.anime {
+  &.none-box {
     background-color: transparent;
     box-shadow: none;
-    animation: lottery-text ease-in-out 1s;
   }
 }
 
@@ -54,4 +53,8 @@
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 10px;
+
+  &.anime {
+    animation: lottery-text ease-in-out 1s;
+  }
 }

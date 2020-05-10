@@ -162,3 +162,87 @@
   justify-content: center;
   z-index: 3;
 }
+
+.winner-anime {
+  &.first {
+    animation: first ease 3s;
+  }
+
+  &.second {
+    animation: second ease 4s;
+  }
+
+  &.third {
+    animation: third ease 5s;
+  }
+
+  &.forth {
+    animation: forth ease 6s;
+  }
+}
+
+@keyframes first {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  66% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes second {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  75% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes third {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  80% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes forth {
+  0% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  84% {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
