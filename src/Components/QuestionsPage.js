@@ -226,23 +226,19 @@ class QuestionsPage extends PureComponent
                         <hr/>
                         <div className="correct-answer">
                             {
-                                `شما به ${data.corrects_count} سوال از ${data.questions_count} سوال پاسخ صحیح داده‌اید`
+                                data.corrects_count === data.questions_count ?
+                                    "شما به همه سوالات پاسخ درست داده‌اید"
+                                    :
+                                    `شما به ${data.corrects_count} سوال از ${data.questions_count} سوال پاسخ صحیح داده‌اید`
                             }
                         </div>
                     </React.Fragment>
                 }
                 {
-                    allCorrect &&
+                    allCorrect && !late &&
                     <React.Fragment>
                         <hr/>
-                        <div className="correct-answer">
-                            {
-                                late ?
-                                    "تبریک! تمام پاسخ های شما صحیح بود"
-                                    :
-                                    "تبریک! تمام پاسخ های شما صحیح بود و در قرعه‌کشی شرکت خواهید کرد"
-                            }
-                        </div>
+                        <div className="correct-answer">تبریک! شما در قرعه‌کشی شرکت خواهید کرد!</div>
                     </React.Fragment>
                 }
                 {
