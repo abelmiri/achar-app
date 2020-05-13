@@ -57,7 +57,7 @@ class Lottery extends PureComponent
 
         return (
             <div className="lottery-cont">
-                <div className="lottery-title">✨ قرعه کشی 🥳</div>
+                <div className="lottery-title"><span role="img" aria-label="">✨</span> قرعه کشی <span role="img" aria-label="">🥳</span></div>
                 <MaterialInput onKeyDown={isValid ? this.submitOnEnter : null} className="lottery-input" backgroundColor="var(--background-color)" label="تاریخ | مثال: 1399/2/5" getValue={this.setDate}/>
                 {notFound && <div className="lottery-err">کاربری یافت نشد! تاریخ وارد شده را چک کنید!</div>}
                 {error && <div className="lottery-err">مشکلی پیش آمد! اینترنت خود را بررسی کنید!</div>}
