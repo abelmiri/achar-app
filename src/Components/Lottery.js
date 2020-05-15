@@ -22,7 +22,7 @@ class Lottery extends PureComponent
 
     setDate = (e) =>
     {
-        this.setState({...this.state, date: numberCorrection(e.target.value.trim().replace(/\/0/g, "/"))})
+        this.setState({...this.state, date: numberCorrection(e.target.value.trim()).replace(/\/0/g, "/")})
     }
 
     lottery = () =>
