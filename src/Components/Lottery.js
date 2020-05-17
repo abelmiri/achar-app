@@ -20,10 +20,7 @@ class Lottery extends PureComponent
         }
     }
 
-    setDate = (e) =>
-    {
-        this.setState({...this.state, date: numberCorrection(e.target.value.trim()).replace(/\/0/g, "/")})
-    }
+    setDate = (e) => this.setState({...this.state, date: numberCorrection(e.target.value.trim()).replace(/\/0/g, "/")})
 
     lottery = () =>
     {
@@ -59,7 +56,7 @@ class Lottery extends PureComponent
             <div className="lottery-cont">
                 <div className="lottery-title"><span role="img" aria-label="">✨</span> قرعه کشی <span role="img" aria-label="">🥳</span></div>
                 <MaterialInput onKeyDown={isValid ? this.submitOnEnter : null} className="lottery-input" backgroundColor="var(--background-color)" label="تاریخ | مثال: 1399/2/5" getValue={this.setDate}/>
-                {notFound && <div className="lottery-err">کاربری یافت نشد! تاریخ وارد شده را چک کنید!</div>}
+                {notFound && <div className="lottery-err">کاربری یافت نشد!</div>}
                 {error && <div className="lottery-err">مشکلی پیش آمد! اینترنت خود را بررسی کنید!</div>}
                 <Material className="lottery-sub-material" onClick={isValid ? this.lottery : null}>
                     <CheckSvg className={`lottery-sub ${isValid ? "active" : ""}`}/>
@@ -74,7 +71,7 @@ class Lottery extends PureComponent
                                 :
                                 <div className="lottery-winners" onClick={e => e.stopPropagation()}>
                                     <div className="winners-section none-box">
-                                        <div className="winners-day anime">برندگان {split[2]} اردیبهشت</div>
+                                        <div className="winners-day anime">برندگان {split[2]} {split[1] === "2" ? "اردیبهشت" : split[1] === "3" ? "خرداد" : ""}</div>
                                         <div className="phone-direction">
                                             {users.map((user, index) => <div className={`winner-anime ${index === 0 ? "first" : index === 1 ? "second" : index === 2 ? "third" : index === 3 ? "forth" : ""}`} key={user.phone}>{user.phone}</div>)}
                                         </div>
