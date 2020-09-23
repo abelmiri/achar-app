@@ -133,7 +133,7 @@ class Winners extends PureComponent
                         <div>091190***56</div>
                         <div>092260***38</div>
                         <div>091145***34</div>
-                        <div>093814***41</div>
+                        <div>093814***26</div>
                     </div>
                 </div>
 
